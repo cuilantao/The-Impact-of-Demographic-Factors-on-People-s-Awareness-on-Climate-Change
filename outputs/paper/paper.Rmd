@@ -1,12 +1,10 @@
 ---
-title: "My title"
-subtitle: "My subtitle if needed"
+title: "Who was most affected by COVID-19 in Toronto"
 author: 
-  - First author
-  - Another author
-thanks: "Code and data are available at: LINK."
+  - Lantao Cui
+thanks: "Code and data are available at: https://github.com/cuilantao/STA304-Paper1."
 date: "`r format(Sys.time(), '%d %B %Y')`"
-abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
+abstract: "The first COVID-19 case was reported on 31 December 2019, exactly two years from now. At first, everyone thought that this is nothing but a seasonal flu and it will end in less than a month, however, it turned out to be a global pandemic and has taken numerous people's lives. In this paper, We obtain and analyze all reported COVID-19 cases in the city of Toronto. We found out that COVID-19 is more fatal toward elders and hits hardest on communities with low income or high population density. Our findings will help the city of Toronto to better help those people at needs."
 output:
   bookdown::pdf_document2
 toc: FALSE
@@ -18,90 +16,130 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
 library(palmerpenguins)
+library(kableExtra)
+wd <- getwd()
+wd
+setwd("../..")
+covid19_cases_cleaned <- read_csv("inputs/data/COVID19-cases-clean.csv")
 ```
 
 # Introduction
+Ever since the dawn of civilization, humanity had been fighting against different plagues. The earliest recorded pandemic happened during the
+Peloponnesian war, which is almost 3000 years from now. This plague wiped through all of Libya, Ethiopia and Egypt, killed almost two-thirds of 
+the entire population. Another well known plague is the black death, which lasted for decades and was responsible for the death of nearly one-thirds of the World Population. But after the industrial revolution, the technology advanced so fast and people developed the illusion that we should be able to defeat any kinds of plague. Therefore, nobody cared at all when COVID first started, until it started to take away millions of people's lives.
 
-You can and should cross-reference sections and sub-sections. For instance, Section \@ref(data). R Markdown automatically makes the sections lower case and adds a dash to spaces to generate labels, for instance, Section \@ref(first-discussion-point). 
+To find out who was most affected, we obtained all of COVID-19 case reports from the City of Toronto's data portal. After some investigation, we found out that as the patient's age increases, the mortality and hospitalization rate also increases exponentially. The mortality rate of kids under 19 years old is 0.00007 and this number increases to 0.23 for people above 90 years old, by a factor of 3000. On top of that, low income or high density neighbourhood are hit the hardest during this pandemic. Among 140 different communities, the top 10 communities with the most COVID-19 cases have contributed 20% of Toronto's total COVID-19 cases.
 
+Our findings have lots of implications, it identifies the groups of people and neighborhood that are most affected by COVID-19, this information will allow the government to better support them and come up with new proceudres that will
+slow down the spread of COVID-19.
 
 
 # Data
+## Data Source
+This dataset contains all of the data reported to Toronto Public Health and are gathered through an R package called "opendatatoronto" [@opendatator]. This dataset contains all of the demographic, geographic, and severity information for all of the confirmed and potential cases of COVID-19. It's updated on a weekly basis and was last updated on Feb 2, 2022.
 
-Our data is of penguins (Figure \@ref(fig:bills)).
+## Data Collection and Methodology
+All of COVID-19 cases are reported to Toronto Public Health by local testing laboratories, then Open data toronto collect those data from the provincial Case & Contact Management System. The strength of this dataset is that it is very detailed and contains a lot of valuable information, for instance, for every reported case, this dataset will track it and include the final result. This can help us to analyze the mortality rate of COVID-19 on different age groups. However, although the dataset contains all of the reported cases, it can not be viewed as 
+an accurate measure of the actual COVID-19 cases because of various reasons. The most notable problem is that you have to get tested to be officially diagnosed with COVID-19. This leads to several problems, first of all, COVID-19 has similar symptoms as a seasonal flu or a common cold, so some people will refuse to get tested. Another problem is the shortage of testing kits, according to the Ontario Government, due to the fast spread of the Omicron variant, PCR tests are only available to "high-risk individuals and individuals who work at high-risk settings". Therefore, those numbers should only be interpreted as "an underestimate of the true number of individuals with COVID-19 in Toronto".
 
-```{r bills, fig.cap="Bills of penguins", echo = FALSE}
-ggplot(penguins, aes(x = island, fill = species)) +
-  geom_bar(alpha = 0.8) +
-  scale_fill_manual(values = c("darkorange","purple","cyan4"),
-                    guide = FALSE) +
-  theme_minimal() +
-  facet_wrap(~species, ncol = 1) +
-  coord_flip()
+## Data overview
+This dataset contains all of the demographic, geographic, and severity data of the reported COVID-19 cases in City of Toronto. It has a total of 272017 cases and has 18 attributes. The first two attributes serves as an identical identifier and are removed in the data pre-processing step. The
+next 5 attributes contain information about the age of the patient, their source of infection and the neighborhood they live in. The next 5 columns are about the gender of the patient, whether case is probable or confirmed, and the outcome. The final 6 columns help to assess the severity of the case. To get a better understanding of the actual data, let us take a look at Figure 1, which is a sample view of the data and is produced by R [@citeR];
+
+```{r echo=FALSE}
+head(covid19_cases_cleaned)
+```
+## The effect of COVID-19 on different age groups
+People always have the illusion that younger people are less affected from disease because they have a stronger immune system. However, this is not always the case, during the 1918 flu, millions of healthy young people died, this is because the 1918 flu triggered a cytokine storm. Basically this will turn your own immune system against you, so there are less deaths in older and middle-aged adults because they have a weaker immune system. Figure 1 made by ggplot2[@plot], Table 1 made by KableExtra [@kabel] and Knitr [@knitr] shows total number of confirmed COVID-19 cases among each group, and the severity of those COVID-19 cases. 
+
+```{r,include = FALSE}
+# first find out which age group has the most reported covid 19 cases
+covid_combined_by_age_group <-
+  group_by(covid19_cases_cleaned, `Age Group`) %>%
+  summarize(n())
+names(covid_combined_by_age_group)[names(covid_combined_by_age_group) == 'n()'] <- 'Total Covid Cases'
+
+fatal_covid_cases <- covid19_cases_cleaned %>% filter(`Outcome` == 'FATAL')
+fatal_covid_case_combined_by_age_group <- fatal_covid_cases %>% 
+  group_by(`Age Group`) %>% 
+  summarize(n())
+names(fatal_covid_case_combined_by_age_group)[names(fatal_covid_case_combined_by_age_group) == 'n()'] <- 'Fatal Cases'
+
+
+total_case_and_fatal_case <- merge(covid_combined_by_age_group,fatal_covid_case_combined_by_age_group,by="Age Group")
+total_case_and_fatal_case$Mortality_Rate <- with(total_case_and_fatal_case, round(`Fatal Cases` / `Total Covid Cases`, 5))
+
+
+# ICU cases
+cases_that_went_to_hospital <- covid19_cases_cleaned %>% filter(`Ever Hospitalized` == 'Yes');
+cases_that_went_to_hospital_combined_by_age_group <- cases_that_went_to_hospital %>% 
+  group_by(`Age Group`) %>%
+  summarize(n())
+names(cases_that_went_to_hospital_combined_by_age_group)[names(cases_that_went_to_hospital_combined_by_age_group) == 'n()'] <- 'Hospitalized'
+total_case_fatal_hos <- merge(total_case_and_fatal_case, cases_that_went_to_hospital_combined_by_age_group, by = "Age Group")
+total_case_fatal_hos$Hospital_Rate <- with(total_case_fatal_hos, round(`Hospitalized` / `Total Covid Cases`, 5))
+total_case_fatal_hos
 ```
 
-Talk more about it.
-
-Also bills and their average (Figure \@ref(fig:billssssss)). (Notice how you can change the height and width so they don't take the whole page?)
-
-```{r billssssss, fig.cap="More bills of penguins", echo = FALSE, fig.width=8, fig.height=4}
-
-# This needs to be about the random data tha tI sasmpled?
-ggplot(penguins, aes(x = island, fill = species)) +
-  geom_bar(alpha = 0.8) +
-  scale_fill_manual(values = c("darkorange","purple","cyan4"),
-                    guide = FALSE) +
-  theme_minimal() +
-  facet_wrap(~species, ncol = 1) +
-  coord_flip()
+```{r , fig.cap="Effect of COVID-19 on different Age Group", echo=FALSE, warning=FALSE, message = FALSE}
+total_case_fatal_hos %>%
+  knitr::kable(caption = "Effect of COVID-19 on different Age Group", 
+               col.names = c("Age Group", "Total COVID-19 Cases", "Fatal Cases", "Mortality Rate", "Hospitalized", "Hospitalized Rate"),
+               align = c('l', 'l', 'l', 'l', 'l', 'l'),
+               booktabs = T) %>%
+  kable_styling(full_width = T, latex_options = "hold_position")
 ```
 
-Talk way more about it. 
+```{r include = FALSE}
+age_group_without_case_count <- subset( total_case_and_fatal_case, select = -c(`Total Covid Cases`, `Fatal Cases` ))
+age_group_without_case_count$Type <- "Mortality Rate"
+names(age_group_without_case_count)[names(age_group_without_case_count) == 'Mortality_Rate'] <- 'Rate'
+another_frame <- subset(total_case_fatal_hos, select = -c(`Total Covid Cases`, `Fatal Cases`, `Hospitalized`, `Mortality_Rate`))
+names(another_frame)[names(another_frame) == 'Hospital_Rate'] <- 'Rate'
+another_frame$Type <- "Hospitalized Rate"
+new <- rbind(age_group_without_case_count, another_frame)
+new$`Age Group`[new$`Age Group`=="19 and younger"] <- "19 and younger"
+new$`Age Group`[new$`Age Group`=="20 to 29 Years"] <- "20-29"
+new$`Age Group`[new$`Age Group`=="30 to 39 Years"] <- "30-39"
+new$`Age Group`[new$`Age Group`=="40 to 49 Years"] <- "40-49"
+new$`Age Group`[new$`Age Group`=="50 to 59 Years"] <- "50-59"
+new$`Age Group`[new$`Age Group`=="60 to 69 Years"] <- "60-69"
+new$`Age Group`[new$`Age Group`=="70 to 79 Years"] <- "70-79"
+new$`Age Group`[new$`Age Group`=="80 to 89 Years"] <- "80-89"
+new$`Age Group`[new$`Age Group`=="90 and older"] <- "Above 90"
+```
+
+```{r, fig.cap="Effect of COVID-19 on different Age Groups", echo=FALSE, warning=FALSE, message = FALSE, fig.width=8, fig.height=3}
+ggplot(new, aes(x=`Age Group`, y=`Rate`,group = `Type`, color = `Type`)) +
+    geom_line()
+```
+
+From the figure and table, it's clear that there is some correlation between people's age and the effect of COVID-19. As people's age increase, the mortality and hospitalization rate grow almost exponentially, the mortality rate of kid under 19 years old is 0.00007, but this number increases to 0.23 when the person is older than 90, which is a factor of 3285. Study shows that "adults over 65 years of age represent 80% of hospitalizations and have a 23-fold greater risk of death than those under 65" [@mueller]. The reason for this is that as people ages, their immune system function will gradually decline, which makes them more vulnerable to virus. Another reason is that older people are more likely to have underlying health conditions such as diabetes and high blood pressure. Those health condition will worsen the symptom of COVID-19 and make it more fatal.
+
+## The effect of COVID-19 on different communities in Toronto
+The next thing we will explore is the effect of COVID-19 on different communities in Toronto. After grouping by and sorting the data using R [@citeR], Figure 2 are produced with ggplot2 [@plot]. The figure plots the top 10 communities with the most COVID-19 infections, a quick research shows those are mostly low-income communities or neighborhood that has a large population density. This is because most jobs with low income require the worker to have much more in-person interactions with other people, thus increasing the risk of COVID-19 infection. And a high density neighborhood usually has a lot of apartment buildings, and it's relatively easier for the virus to spread within an apartment building because people are sharing lots of things such as air vent and elevator. This finding shows that COVID-19 situations varies across different communities and it maybe beneficial if the government starts to enforce different procedure based on different communities.
+
+```{r, include = FALSE}
+covid_combined_by_postal_code <-
+  group_by(covid19_cases_cleaned, `Neighbourhood Name`) %>%
+  summarize(n())
+names(covid_combined_by_postal_code)[names(covid_combined_by_postal_code) == 'n()'] <- 'n'
+```
 
 
+```{r, include = FALSE}
+total_case_by_postal_sorted <- covid_combined_by_postal_code[order(-covid_combined_by_postal_code$n),]
+total_case_by_postal_sorted
+top_10 <- total_case_by_postal_sorted[1:10, ]
+top_10
+```
 
-# Model
+\pagebreak
+```{r, fig.cap="Effect of COVID-19 on different communities", echo=FALSE, warning=FALSE, message = FALSE, fig.width=10, fig.height=4}
+ggplot(data=top_10, aes(x = reorder(`Neighbourhood Name`, n), y=n)) +
+  geom_bar(stat="identity", position=position_dodge()) + coord_flip()
+```
 
-\begin{equation}
-Pr(\theta | y) = \frac{Pr(y | \theta) Pr(\theta)}{Pr(y)}  (\#eq:bayes)
-\end{equation}
-
-Equation \@ref(eq:bayes) seems useful, eh?
-
-Here's a dumb example of how to use some references: In paper we run our analysis in `R` [@citeR]. We also use the `tidyverse` which was written by @thereferencecanbewhatever If we were interested in baseball data then @citeLahman could be useful. 
-
-We can use maths by including latex between dollar signs, for instance $\theta$.
-
-
-# Results
-
-# Discussion
-
-## First discussion point
-
-If my paper were 10 pages, then should be be at least 2.5 pages. The discussion is a chance to show off what you know and what you learnt from all this. 
-
-## Second discussion point
-
-## Third discussion point
-
-## Weaknesses and next steps
-
-Weaknesses and next steps should also be included.
-
-\newpage
-
-\appendix
-
-# Appendix {-}
-
-
-# Additional details
-
-
-\newpage
-
+\pagebreak
 
 # References
-
-
