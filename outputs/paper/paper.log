@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.1.26)  6 FEB 2022 21:55
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.1.26)  7 FEB 2022 01:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -682,21 +682,21 @@ has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.221 
+l.227 
        <./paper_files/figure-latex/unnamed-chunk-8-1.pdf>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 248.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 254.
 [5]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 248.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 254.
 (./paper.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 248.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 248.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 254.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 254.
  ) 
 Here is how much of TeX's memory you used:
- 14752 strings out of 481239
- 214365 string characters out of 5920377
- 517708 words of memory out of 5000000
- 29607 multiletter control sequences out of 15000+600000
- 600274 words of font info for 120 fonts, out of 8000000 for 9000
+ 14758 strings out of 481239
+ 214428 string characters out of 5920377
+ 517748 words of memory out of 5000000
+ 29609 multiletter control sequences out of 15000+600000
+ 600357 words of font info for 121 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,15n,42p,1002b,487s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dv
@@ -707,10 +707,10 @@ fonts/type1/public/lm/lmr17.pfb></usr/share/texmf/fonts/type1/public/lm/lmr6.pf
 b></usr/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type
 1/public/lm/lmr9.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/s
 hare/texmf/fonts/type1/public/lm/lmtt10.pfb>
-Output written on paper.pdf (5 pages, 265160 bytes).
+Output written on paper.pdf (5 pages, 266128 bytes).
 PDF statistics:
- 156 PDF objects out of 1000 (max. 8388607)
- 131 compressed objects within 2 object streams
- 32 named destinations out of 1000 (max. 500000)
- 16459 words of extra memory for PDF output out of 17280 (max. 10000000)
+ 161 PDF objects out of 1000 (max. 8388607)
+ 136 compressed objects within 2 object streams
+ 34 named destinations out of 1000 (max. 500000)
+ 16467 words of extra memory for PDF output out of 17280 (max. 10000000)
 

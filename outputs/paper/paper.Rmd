@@ -11,7 +11,7 @@ toc: FALSE
 bibliography: references.bib
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
@@ -21,6 +21,7 @@ wd <- getwd()
 wd
 setwd("../..")
 covid19_cases_cleaned <- read_csv("inputs/data/COVID19-cases-clean.csv")
+head(covid19_cases_cleaned)
 ```
 
 # Introduction
@@ -134,11 +135,16 @@ top_10 <- total_case_by_postal_sorted[1:10, ]
 top_10
 ```
 
+
 \pagebreak
 ```{r, fig.cap="Effect of COVID-19 on different communities", echo=FALSE, warning=FALSE, message = FALSE, fig.width=10, fig.height=4}
 ggplot(data=top_10, aes(x = reorder(`Neighbourhood Name`, n), y=n)) +
   geom_bar(stat="identity", position=position_dodge()) + coord_flip()
 ```
+
+## Conclusion
+Our findings clearly revealed that COVID-19 hits certain people and neighborhood really hard and they require more attention from the government. Luckily, the City of Toronto is aware of this situation and have launched support programs
+targeting those neighborhood. For instance, the City of Toronto is offering free self-isolation sites for those people diagnosed with COVID-19 and is also giving seniors and people with underlying health condition top priority in the vaccination program.
 
 \pagebreak
 
