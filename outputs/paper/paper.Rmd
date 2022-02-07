@@ -12,15 +12,15 @@ bibliography: references.bib
 ---
 
 ```{r setup, include = FALSE}
+# We load all necessary libraries
 knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
 library(palmerpenguins)
 library(kableExtra)
-wd <- getwd()
-wd
-setwd("../..")
-covid19_cases_cleaned <- read_csv("inputs/data/COVID19-cases-clean.csv")
+library(here)
+# Read the dataset, use here to navigate to working directory
+covid19_cases_cleaned <- read_csv(here::here("inputs/data/COVID19-cases-clean.csv"))
 head(covid19_cases_cleaned)
 ```
 
@@ -29,9 +29,9 @@ Ever since the dawn of civilization, humanity had been fighting against differen
 Peloponnesian war, which was almost 3000 years from now. This plague wiped through all of Libya, Ethiopia and Egypt, killed almost two-thirds of 
 the entire population. Another well known plague is the black death, which lasted for decades and was responsible for the death of nearly one-thirds of the World Population. But after the industrial revolution, the technology advanced so fast and people developed the illusion that we should be able to defeat any kinds of plague. Therefore, nobody cared at all when COVID-19 first started, until it started to take away millions of people's lives.
 
-To find out who was most affected, we obtained all of COVID-19 case reports from the City of Toronto's data portal. After some investigation, we found out that as the patient's age increases, the mortality and hospitalization rate also increases exponentially. The mortality rate of kids under 19 years old is 0.00007 and this number increases to 0.23 for people above 90 years old, by a factor of 3000. On top of that, low income or high density neighbourhood are hit the hardest during this pandemic. Among 140 different communities, the top 10 communities with the most COVID-19 cases have contributed 20% of Toronto's total COVID-19 cases.
+To find out who was most affected, we obtained all of COVID-19 case reports from the City of Toronto's data portal [@opendatac]. After some investigation, we found out that as the patient's age increases, the mortality and hospitalization rate also increases exponentially. The mortality rate of kids under 19 years old is 0.00007 and this number increases to 0.23 for people above 90 years old, by a factor of 3000. On top of that, low income or high density neighbourhood are hit the hardest during this pandemic. Among 140 different communities, the top 10 communities with the most COVID-19 cases have contributed 20% of Toronto's total COVID-19 cases.
 
-Our findings have lots of implications, it identifies the groups of people and neighborhood that are most affected by COVID-19, this information will allow the government to better support them and come up with new proceudres that will
+This report will first find out if there exists a correlation between age and the mortality rate of COVID-19. Then it will attempt to find out which community in Toronto is most affect by COVID-19. Our findings have lots of implications, it will help to identify the groups of people and neighborhood that are at high risk, this information will allow the government to better support them and come up with new procedures that will
 slow down the spread of COVID-19.
 
 
@@ -58,15 +58,18 @@ People always have the illusion that younger people are less affected from disea
 covid_combined_by_age_group <-
   group_by(covid19_cases_cleaned, `Age Group`) %>%
   summarize(n())
+# Change column name from n() to Total Covid Cases
 names(covid_combined_by_age_group)[names(covid_combined_by_age_group) == 'n()'] <- 'Total Covid Cases'
 
+# Find out all fatal covid cases
 fatal_covid_cases <- covid19_cases_cleaned %>% filter(`Outcome` == 'FATAL')
 fatal_covid_case_combined_by_age_group <- fatal_covid_cases %>% 
   group_by(`Age Group`) %>% 
   summarize(n())
+# Change the name
 names(fatal_covid_case_combined_by_age_group)[names(fatal_covid_case_combined_by_age_group) == 'n()'] <- 'Fatal Cases'
 
-
+# Combine the two data frame, now for each age group, we know the total covid case and the fatal ones
 total_case_and_fatal_case <- merge(covid_combined_by_age_group,fatal_covid_case_combined_by_age_group,by="Age Group")
 total_case_and_fatal_case$Mortality_Rate <- with(total_case_and_fatal_case, round(`Fatal Cases` / `Total Covid Cases`, 5))
 
@@ -76,6 +79,8 @@ cases_that_went_to_hospital <- covid19_cases_cleaned %>% filter(`Ever Hospitaliz
 cases_that_went_to_hospital_combined_by_age_group <- cases_that_went_to_hospital %>% 
   group_by(`Age Group`) %>%
   summarize(n())
+
+# Combine the two data frame and calculate the hospitalization rate by using Hospitalized / Total Covid Cases
 names(cases_that_went_to_hospital_combined_by_age_group)[names(cases_that_went_to_hospital_combined_by_age_group) == 'n()'] <- 'Hospitalized'
 total_case_fatal_hos <- merge(total_case_and_fatal_case, cases_that_went_to_hospital_combined_by_age_group, by = "Age Group")
 total_case_fatal_hos$Hospital_Rate <- with(total_case_fatal_hos, round(`Hospitalized` / `Total Covid Cases`, 5))
@@ -92,6 +97,7 @@ total_case_fatal_hos %>%
 ```
 
 ```{r include = FALSE}
+# Construct a new dataframe, it contains identical information, but is easier to plot
 age_group_without_case_count <- subset( total_case_and_fatal_case, select = -c(`Total Covid Cases`, `Fatal Cases` ))
 age_group_without_case_count$Type <- "Mortality Rate"
 names(age_group_without_case_count)[names(age_group_without_case_count) == 'Mortality_Rate'] <- 'Rate'
@@ -121,6 +127,7 @@ From the figure and table, it's clear that there is some correlation between peo
 The next thing we will explore is the effect of COVID-19 on different communities in Toronto. After grouping by and sorting the data using R [@citeR], Figure 2 is produced with ggplot2 [@plot]. The figure plots the top 10 communities with the most COVID-19 infections, a quick research shows those are mostly low-income communities or neighborhood that have a large population density. This is because most jobs with low income require the worker to have much more in-person interactions with other people, thus increasing the risk of COVID-19 infection. And a high density neighborhood usually has a lot of apartment buildings, and it's relatively easier for the virus to spread within an apartment building because people are sharing lots of things such as air vent and elevator. This finding shows that COVID-19 situations varies across different communities and it maybe beneficial if the government starts to enforce different procedures based on different communities.
 
 ```{r, include = FALSE}
+# Group covid case by Neighbourhood Name
 covid_combined_by_postal_code <-
   group_by(covid19_cases_cleaned, `Neighbourhood Name`) %>%
   summarize(n())
@@ -129,6 +136,7 @@ names(covid_combined_by_postal_code)[names(covid_combined_by_postal_code) == 'n(
 
 
 ```{r, include = FALSE}
+# Sort by case counts, and get the first 10
 total_case_by_postal_sorted <- covid_combined_by_postal_code[order(-covid_combined_by_postal_code$n),]
 total_case_by_postal_sorted
 top_10 <- total_case_by_postal_sorted[1:10, ]
