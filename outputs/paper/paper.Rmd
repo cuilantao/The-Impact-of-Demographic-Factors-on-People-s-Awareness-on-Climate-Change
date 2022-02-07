@@ -1,8 +1,8 @@
 ---
-title: "Who were most affected by COVID-19 in Toronto"
+title: "Old people and low-income communities are most affected by COVID-19"
 author: 
   - Lantao Cui
-thanks: "Code and data are available at: https://github.com/cuilantao/Impace-of-COVID19-on-Toronto."
+thanks: "Code and data are available at: https://github.com/cuilantao/Impact-of-COVID19-on-Toronto."
 date: "`r format(Sys.time(), '%d %B %Y')`"
 abstract: "The first COVID-19 case was reported on 31 December 2019, exactly two years from now. At first, everyone thought that this is nothing but a seasonal flu and it will end in less than a month, however, it turned out to be a global pandemic and has taken numerous people's lives. In this paper, We obtain and analyze all reported COVID-19 cases in the city of Toronto. We found out that COVID-19 is more fatal toward elders and hits hardest on communities with low income or high population density. Our findings will help the city of Toronto to better help those people at needs."
 output:

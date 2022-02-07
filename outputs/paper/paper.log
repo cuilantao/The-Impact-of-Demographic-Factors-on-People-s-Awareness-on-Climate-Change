@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.1.26)  7 FEB 2022 01:49
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.1.26)  7 FEB 2022 02:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -651,7 +651,7 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<paper_files/figure-latex/unnamed-chunk-5-1.pdf, id=27, 562.1pt x 207.77625pt>
+<paper_files/figure-latex/unnamed-chunk-5-1.pdf, id=26, 562.1pt x 207.77625pt>
 File: paper_files/figure-latex/unnamed-chunk-5-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/unnamed-chunk-5-1.pdf>
 Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-5-1.pdf  used o
@@ -694,7 +694,7 @@ Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 254.
 Here is how much of TeX's memory you used:
  14756 strings out of 481239
  214410 string characters out of 5920377
- 517769 words of memory out of 5000000
+ 516907 words of memory out of 5000000
  29609 multiletter control sequences out of 15000+600000
  600274 words of font info for 120 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -707,7 +707,7 @@ fonts/type1/public/lm/lmr17.pfb></usr/share/texmf/fonts/type1/public/lm/lmr6.pf
 b></usr/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type
 1/public/lm/lmr9.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/s
 hare/texmf/fonts/type1/public/lm/lmtt10.pfb>
-Output written on paper.pdf (5 pages, 265971 bytes).
+Output written on paper.pdf (5 pages, 265977 bytes).
 PDF statistics:
  161 PDF objects out of 1000 (max. 8388607)
  136 compressed objects within 2 object streams
