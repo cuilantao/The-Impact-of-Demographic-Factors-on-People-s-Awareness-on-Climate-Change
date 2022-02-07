@@ -4,7 +4,7 @@ author:
   - Lantao Cui
 thanks: "Code and data are available at: https://github.com/cuilantao/Impact-of-COVID19-on-Toronto."
 date: "`r format(Sys.time(), '%d %B %Y')`"
-abstract: "The first COVID-19 case was reported on 31 December 2019, exactly two years from now. At first, everyone thought that this is nothing but a seasonal flu and it will end in less than a month, however, it turned out to be a global pandemic and has taken numerous people's lives. In this paper, We obtain and analyze all reported COVID-19 cases in the city of Toronto. We found out that COVID-19 is more fatal toward elders and hits hardest on communities with low income or high population density. Our findings will help the city of Toronto to better help those people at needs."
+abstract: "The first COVID-19 case was reported on 31 December 2019, approximately two years from now. At first, everyone thought that this was nothing but a seasonal flu which would end in less than a month, however, it turned out to be a global pandemic and has taken numerous people's lives. In this paper, we obtain and analyze all reported COVID-19 cases in the city of Toronto. We found out that COVID-19 is more fatal toward elders and hits hardest on communities with low income or high population density. Our findings will help the city of Toronto to better help those people at needs."
 output:
   bookdown::pdf_document2
 toc: FALSE
@@ -36,7 +36,7 @@ slow down the spread of COVID-19.
 
 
 # Data
-## Data Source
+## Data Source.
 This dataset contains all of the data reported to Toronto Public Health and are gathered through an R package called "opendatatoronto" [@opendatator]. This dataset contains all of the demographic, geographic, and severity information for all of the confirmed and potential cases of COVID-19. It's updated on a weekly basis and was last updated on Feb 2, 2022.
 
 ## Data Collection and Methodology
