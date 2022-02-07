@@ -1,8 +1,8 @@
 ---
-title: "Who was most affected by COVID-19 in Toronto"
+title: "Who were most affected by COVID-19 in Toronto"
 author: 
   - Lantao Cui
-thanks: "Code and data are available at: https://github.com/cuilantao/STA304-Paper1."
+thanks: "Code and data are available at: https://github.com/cuilantao/Impace-of-COVID19-on-Toronto."
 date: "`r format(Sys.time(), '%d %B %Y')`"
 abstract: "The first COVID-19 case was reported on 31 December 2019, exactly two years from now. At first, everyone thought that this is nothing but a seasonal flu and it will end in less than a month, however, it turned out to be a global pandemic and has taken numerous people's lives. In this paper, We obtain and analyze all reported COVID-19 cases in the city of Toronto. We found out that COVID-19 is more fatal toward elders and hits hardest on communities with low income or high population density. Our findings will help the city of Toronto to better help those people at needs."
 output:
@@ -26,8 +26,8 @@ head(covid19_cases_cleaned)
 
 # Introduction
 Ever since the dawn of civilization, humanity had been fighting against different plagues. The earliest recorded pandemic happened during the
-Peloponnesian war, which is almost 3000 years from now. This plague wiped through all of Libya, Ethiopia and Egypt, killed almost two-thirds of 
-the entire population. Another well known plague is the black death, which lasted for decades and was responsible for the death of nearly one-thirds of the World Population. But after the industrial revolution, the technology advanced so fast and people developed the illusion that we should be able to defeat any kinds of plague. Therefore, nobody cared at all when COVID first started, until it started to take away millions of people's lives.
+Peloponnesian war, which was almost 3000 years from now. This plague wiped through all of Libya, Ethiopia and Egypt, killed almost two-thirds of 
+the entire population. Another well known plague is the black death, which lasted for decades and was responsible for the death of nearly one-thirds of the World Population. But after the industrial revolution, the technology advanced so fast and people developed the illusion that we should be able to defeat any kinds of plague. Therefore, nobody cared at all when COVID-19 first started, until it started to take away millions of people's lives.
 
 To find out who was most affected, we obtained all of COVID-19 case reports from the City of Toronto's data portal. After some investigation, we found out that as the patient's age increases, the mortality and hospitalization rate also increases exponentially. The mortality rate of kids under 19 years old is 0.00007 and this number increases to 0.23 for people above 90 years old, by a factor of 3000. On top of that, low income or high density neighbourhood are hit the hardest during this pandemic. Among 140 different communities, the top 10 communities with the most COVID-19 cases have contributed 20% of Toronto's total COVID-19 cases.
 
@@ -44,14 +44,14 @@ All of COVID-19 cases are reported to Toronto Public Health by local testing lab
 an accurate measure of the actual COVID-19 cases because of various reasons. The most notable problem is that you have to get tested to be officially diagnosed with COVID-19. This leads to several problems, first of all, COVID-19 has similar symptoms as a seasonal flu or a common cold, so some people will refuse to get tested. Another problem is the shortage of testing kits, according to the Ontario Government, due to the fast spread of the Omicron variant, PCR tests are only available to "high-risk individuals and individuals who work at high-risk settings". Therefore, those numbers should only be interpreted as "an underestimate of the true number of individuals with COVID-19 in Toronto".
 
 ## Data overview
-This dataset contains all of the demographic, geographic, and severity data of the reported COVID-19 cases in City of Toronto. It has a total of 272017 cases and has 18 attributes. The first two attributes serves as an identical identifier and are removed in the data pre-processing step. The
+This dataset contains all of the demographic, geographic, and severity data of the reported COVID-19 cases in the City of Toronto. It has a total of 272017 cases and has 18 attributes. The first two attributes serves as a distinct identifier and are removed in the data pre-processing step. The
 next 5 attributes contain information about the age of the patient, their source of infection and the neighborhood they live in. The next 5 columns are about the gender of the patient, whether case is probable or confirmed, and the outcome. The final 6 columns help to assess the severity of the case. To get a better understanding of the actual data, let us take a look at Figure 1, which is a sample view of the data and is produced by R [@citeR];
 
 ```{r echo=FALSE}
 head(covid19_cases_cleaned)
 ```
 ## The effect of COVID-19 on different age groups
-People always have the illusion that younger people are less affected from disease because they have a stronger immune system. However, this is not always the case, during the 1918 flu, millions of healthy young people died, this is because the 1918 flu triggered a cytokine storm. Basically this will turn your own immune system against you, so there are less deaths in older and middle-aged adults because they have a weaker immune system. Figure 1 made by ggplot2[@plot], Table 1 made by KableExtra [@kabel] and Knitr [@knitr] shows total number of confirmed COVID-19 cases among each group, and the severity of those COVID-19 cases. 
+People always have the illusion that younger people are less affected from disease because they have a stronger immune system. However, this is not always the case, during the 1918 flu, millions of healthy young people died, this is because the 1918 flu triggered a cytokine storm. Basically this will turn your own immune system against you, as a result, there were less deaths in older and middle-aged adults because they have a weaker immune system. To see if COVID-19 has a simular effect, Figure 1 made by ggplot2[@plot], Table 1 made by KableExtra [@kabel] and Knitr [@knitr] shows total number of confirmed COVID-19 cases among each age group, and the severity of those COVID-19 cases. 
 
 ```{r,include = FALSE}
 # first find out which age group has the most reported covid 19 cases
@@ -115,10 +115,10 @@ ggplot(new, aes(x=`Age Group`, y=`Rate`,group = `Type`, color = `Type`)) +
     geom_line()
 ```
 
-From the figure and table, it's clear that there is some correlation between people's age and the effect of COVID-19. As people's age increase, the mortality and hospitalization rate grow almost exponentially, the mortality rate of kid under 19 years old is 0.00007, but this number increases to 0.23 when the person is older than 90, which is a factor of 3285. Study shows that "adults over 65 years of age represent 80% of hospitalizations and have a 23-fold greater risk of death than those under 65" [@mueller]. The reason for this is that as people ages, their immune system function will gradually decline, which makes them more vulnerable to virus. Another reason is that older people are more likely to have underlying health conditions such as diabetes and high blood pressure. Those health condition will worsen the symptom of COVID-19 and make it more fatal.
+From the figure and table, it's clear that there is some correlation between people's age and the effect of COVID-19. As people's age increase, the mortality and hospitalization rate grow almost exponentially, the mortality rate of kid under 19 years old is 0.00007, but this number increases to 0.23 when the person is older than 90, which is a factor of 3285. Study also shows that "adults over 65 years of age represent 80% of hospitalizations and have a 23-fold greater risk of death than those under 65" [@mueller]. The reason for this is that as people ages, their immune system function will gradually decline, which makes them more vulnerable to virus. Another reason is that older people are more likely to have underlying health conditions such as diabetes and high blood pressure. Those health condition will worsen the symptom of COVID-19 and make it more fatal.
 
 ## The effect of COVID-19 on different communities in Toronto
-The next thing we will explore is the effect of COVID-19 on different communities in Toronto. After grouping by and sorting the data using R [@citeR], Figure 2 are produced with ggplot2 [@plot]. The figure plots the top 10 communities with the most COVID-19 infections, a quick research shows those are mostly low-income communities or neighborhood that has a large population density. This is because most jobs with low income require the worker to have much more in-person interactions with other people, thus increasing the risk of COVID-19 infection. And a high density neighborhood usually has a lot of apartment buildings, and it's relatively easier for the virus to spread within an apartment building because people are sharing lots of things such as air vent and elevator. This finding shows that COVID-19 situations varies across different communities and it maybe beneficial if the government starts to enforce different procedure based on different communities.
+The next thing we will explore is the effect of COVID-19 on different communities in Toronto. After grouping by and sorting the data using R [@citeR], Figure 2 is produced with ggplot2 [@plot]. The figure plots the top 10 communities with the most COVID-19 infections, a quick research shows those are mostly low-income communities or neighborhood that have a large population density. This is because most jobs with low income require the worker to have much more in-person interactions with other people, thus increasing the risk of COVID-19 infection. And a high density neighborhood usually has a lot of apartment buildings, and it's relatively easier for the virus to spread within an apartment building because people are sharing lots of things such as air vent and elevator. This finding shows that COVID-19 situations varies across different communities and it maybe beneficial if the government starts to enforce different procedures based on different communities.
 
 ```{r, include = FALSE}
 covid_combined_by_postal_code <-
@@ -143,7 +143,7 @@ ggplot(data=top_10, aes(x = reorder(`Neighbourhood Name`, n), y=n)) +
 ```
 
 ## Conclusion
-Our findings clearly revealed that COVID-19 hits certain people and neighborhood really hard and they require more attention from the government. Luckily, the City of Toronto is aware of this situation and have launched support programs
+Our findings clearly revealed that COVID-19 hits certain people and neighborhood harder and they require more attention from the government. Luckily, the City of Toronto is aware of this situation and have launched support programs
 targeting those neighborhood. For instance, the City of Toronto is offering free self-isolation sites for those people diagnosed with COVID-19 and is also giving seniors and people with underlying health condition top priority in the vaccination program.
 
 \pagebreak
