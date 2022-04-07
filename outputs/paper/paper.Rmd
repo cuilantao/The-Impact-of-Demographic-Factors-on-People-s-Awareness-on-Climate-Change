@@ -1,159 +1,26 @@
 ---
-title: "Old people and low-income communities are most affected by COVID-19"
+title: "Toronto's Reaction to Fight Against Global Warming"
 author: 
   - Lantao Cui
-thanks: "Code and data are available at: https://github.com/cuilantao/Impact-of-COVID19-on-Toronto."
+thanks: "Code and data are available at: https://github.com/cuilantao/Toronto-s-reaction-to-fight-against-global-warming"
 date: "`r format(Sys.time(), '%d %B %Y')`"
-abstract: "The first COVID-19 case was reported on 31 December 2019, approximately two years from now. At first, everyone thought that this was nothing but a seasonal flu which would end in less than a month, however, it turned out to be a global pandemic and has taken numerous people's lives. In this paper, we obtain and analyze all reported COVID-19 cases in the city of Toronto. We found out that COVID-19 is more fatal toward elders and hits hardest on communities with low income or high population density. Our findings will help the city of Toronto to better help those people at needs."
+abstract: "Climate change and global warming are predominant problems nowadays, in the north pole, polar ice caps are melting at a rate of almost 14% per decade. On top of that, over the past 30 years, the oldest and thickest ice in the north pole has declined by almost 95%. The majority of the Science Community believes that global warming is caused by the excessive emission of greenhouse gases such as Carbon Dioxide and Methane. Luckily, a lot of countries are actively trying to limit the emission of such gases to fight against climate change. In this paper, we will obtain and analyze different Toronto organizations' Energy consumption and Green House Gas emissions from 2011 to 2017. Our findings can help the city government to establish better climate strategies."
 output:
   bookdown::pdf_document2
 toc: FALSE
 bibliography: references.bib
 ---
 
-```{r setup, include = FALSE}
-# We load all necessary libraries
-knitr::opts_chunk$set(echo = TRUE)
-
-library(tidyverse)
-library(palmerpenguins)
-library(kableExtra)
-library(here)
-# Read the dataset, use here to navigate to working directory
-covid19_cases_cleaned <- read_csv(here::here("inputs/data/COVID19-cases-clean.csv"))
-head(covid19_cases_cleaned)
-```
-
 # Introduction
-Ever since the dawn of civilization, humanity had been fighting against different plagues. The earliest recorded pandemic happened during the
-Peloponnesian war, which was almost 3000 years from now. This plague wiped through all of Libya, Ethiopia and Egypt, killed almost two-thirds of 
-the entire population. Another well known plague is the black death, which lasted for decades and was responsible for the death of nearly one-thirds of the World Population. But after the industrial revolution, technology advanced so fast and people developed the illusion that we should be able to defeat any kinds of plague. Therefore, nobody cared at all when COVID-19 first started, until it started to take away millions of people's lives.
 
-To find out who was most affected, we obtained all of COVID-19 case reports from the City of Toronto's data portal [@opendatac]. After some investigation, we found out that as the patient's age increases, the mortality and hospitalization rate also increases exponentially. The mortality rate of kids under 19 years old is 0.00007 and this number increases to 0.23 for people above 90 years old, by a factor of 3000. On top of that, low-income or high-density neighborhood are hit the hardest during this pandemic. Among 140 different communities, the top 10 communities with the most COVID-19 cases have contributed 20% of Toronto's total COVID-19 cases.
-
-This report will first find out if there exists a correlation between age and the mortality rate of COVID-19. Then it will attempt to find out which community in Toronto is most affected by COVID-19. Our findings have lots of implications, it will help to identify the groups of people and neighborhoods that are at high risk, this information will allow the government to better support them and come up with new procedures that will
-slow down the spread of COVID-19.
-
+Ever since Industrial Revolution, people's life has become more and more convenient, for example, the invention of the steam engine made transportation much more easier. However, this convenience comes with great drawbacks, over the entire industrial revolution, scientist estimated that a total of 2.3 trillion tonnes of Carbon Dioxide have been released into the atmosphere, what is even worse is that those Carbon Dioxide has a life span of 300 - 1000 years, this means that those climate change can happen on the time scale of many generations' lives. The reason those green house gases cause global warming is because they will reflect the heat radiated from Earths' surface back, thus making the Earth warmer. However, hundreds of nations are actively trying to fight against Climate Change, some are planting more trees so that the excessive Carbon Dioxide can be absorbed through Photosynthesis, some are developing more sustainable and environment-free energy source such as solar power. In this paper, we will obtain and analyze different Toronto organizations' Energy consumption and Green House Gas emissions from 2011 to 2017, we aim to find out Toronto's contribution in limiting the emission of green house gases.
 
 # Data
-## Data Source.
-This dataset contains all of the data reported to Toronto Public Health and is gathered through an R package called "opendatatoronto" [@opendatator]. This dataset contains all of the demographic, geographic, and severity information for all of the confirmed and potential cases of COVID-19. It's updated on a weekly basis and was last updated on Feb 2, 2022.
 
-## Data Collection and Methodology
-All of COVID-19 cases are reported to Toronto Public Health by local testing laboratories, then Open data toronto collect those data from the provincial Case & Contact Management System. The strength of this dataset is that it is very detailed and contains a lot of valuable information, for instance, for every reported case, this dataset will track it and include the final result. This can help us to analyze the mortality rate of COVID-19 in different age groups. However, although the dataset contains all of the reported cases, it can not be viewed as 
-an accurate measure of the actual COVID-19 cases because of various reasons. The most notable problem is that you have to get tested to be officially diagnosed with COVID-19. This leads to several problems, first of all, COVID-19 has similar symptoms as a seasonal flu or a common cold, so some people will refuse to get tested. Another problem is the shortage of testing kits, according to the Ontario Government, due to the fast spread of the Omicron variant, PCR tests are only available to "high-risk individuals and individuals who work at high-risk settings". Therefore, those numbers should only be interpreted as "an underestimate of the true number of individuals with COVID-19 in Toronto".
+## Data Source
 
-## Data overview
-This dataset contains all of the demographic, geographic, and severity data of the reported COVID-19 cases in the City of Toronto. It has a total of 272017 cases and has 18 attributes. The first two attributes serve as a distinct identifier and are removed in the data pre-processing step. The
-next 5 attributes contain information about the age of the patient, their source of infection and the neighborhood they live in. The next 5 columns are about the gender of the patient, whether the case is probable or confirmed, and the outcome. The final 6 columns help to assess the severity of the case. To get a better understanding of the actual data, let us take a look at Figure 1, which is a sample view of the data and is produced by R [@citeR];
+## Methodology and Data Collection
 
-```{r echo=FALSE}
-head(covid19_cases_cleaned)
-```
-## The effect of COVID-19 on different age groups
-People always have the illusion that younger people are less affected by disease because they have a stronger immune system. However, this is not always the case, during the 1918 flu, millions of healthy young people died, this is because the 1918 flu triggered a cytokine storm. Basically, this will turn your own immune system against you, as a result, there were fewer deaths in older and middle-aged adults because they have a weaker immune system. To see if COVID-19 has a similar effect, Figure 1 made by ggplot2[@plot], Table 1 made by KableExtra [@kabel] and Knitr [@knitr] shows the total number of confirmed COVID-19 cases among each age group, and the severity of those COVID-19 cases. 
+# Results
 
-```{r,include = FALSE}
-# first find out which age group has the most reported covid 19 cases
-covid_combined_by_age_group <-
-  group_by(covid19_cases_cleaned, `Age Group`) %>%
-  summarize(n())
-# Change column name from n() to Total Covid Cases
-names(covid_combined_by_age_group)[names(covid_combined_by_age_group) == 'n()'] <- 'Total Covid Cases'
-
-# Find out all fatal covid cases
-fatal_covid_cases <- covid19_cases_cleaned %>% filter(`Outcome` == 'FATAL')
-fatal_covid_case_combined_by_age_group <- fatal_covid_cases %>% 
-  group_by(`Age Group`) %>% 
-  summarize(n())
-# Change the name
-names(fatal_covid_case_combined_by_age_group)[names(fatal_covid_case_combined_by_age_group) == 'n()'] <- 'Fatal Cases'
-
-# Combine the two data frame, now for each age group, we know the total covid case and the fatal ones
-total_case_and_fatal_case <- merge(covid_combined_by_age_group,fatal_covid_case_combined_by_age_group,by="Age Group")
-total_case_and_fatal_case$Mortality_Rate <- with(total_case_and_fatal_case, round(`Fatal Cases` / `Total Covid Cases`, 5))
-
-
-# ICU cases
-cases_that_went_to_hospital <- covid19_cases_cleaned %>% filter(`Ever Hospitalized` == 'Yes');
-cases_that_went_to_hospital_combined_by_age_group <- cases_that_went_to_hospital %>% 
-  group_by(`Age Group`) %>%
-  summarize(n())
-
-# Combine the two data frame and calculate the hospitalization rate by using Hospitalized / Total Covid Cases
-names(cases_that_went_to_hospital_combined_by_age_group)[names(cases_that_went_to_hospital_combined_by_age_group) == 'n()'] <- 'Hospitalized'
-total_case_fatal_hos <- merge(total_case_and_fatal_case, cases_that_went_to_hospital_combined_by_age_group, by = "Age Group")
-total_case_fatal_hos$Hospital_Rate <- with(total_case_fatal_hos, round(`Hospitalized` / `Total Covid Cases`, 5))
-total_case_fatal_hos
-```
-
-```{r , fig.cap="Effect of COVID-19 on different Age Group", echo=FALSE, warning=FALSE, message = FALSE}
-total_case_fatal_hos %>%
-  knitr::kable(caption = "Effect of COVID-19 on different Age Group", 
-               col.names = c("Age Group", "Total COVID-19 Cases", "Fatal Cases", "Mortality Rate", "Hospitalized", "Hospitalized Rate"),
-               align = c('l', 'l', 'l', 'l', 'l', 'l'),
-               booktabs = T) %>%
-  kable_styling(full_width = T, latex_options = "hold_position")
-```
-
-```{r include = FALSE}
-# Construct a new dataframe, it contains identical information, but is easier to plot
-age_group_without_case_count <- subset( total_case_and_fatal_case, select = -c(`Total Covid Cases`, `Fatal Cases` ))
-age_group_without_case_count$Type <- "Mortality Rate"
-names(age_group_without_case_count)[names(age_group_without_case_count) == 'Mortality_Rate'] <- 'Rate'
-another_frame <- subset(total_case_fatal_hos, select = -c(`Total Covid Cases`, `Fatal Cases`, `Hospitalized`, `Mortality_Rate`))
-names(another_frame)[names(another_frame) == 'Hospital_Rate'] <- 'Rate'
-another_frame$Type <- "Hospitalized Rate"
-new <- rbind(age_group_without_case_count, another_frame)
-new$`Age Group`[new$`Age Group`=="19 and younger"] <- "19 and younger"
-new$`Age Group`[new$`Age Group`=="20 to 29 Years"] <- "20-29"
-new$`Age Group`[new$`Age Group`=="30 to 39 Years"] <- "30-39"
-new$`Age Group`[new$`Age Group`=="40 to 49 Years"] <- "40-49"
-new$`Age Group`[new$`Age Group`=="50 to 59 Years"] <- "50-59"
-new$`Age Group`[new$`Age Group`=="60 to 69 Years"] <- "60-69"
-new$`Age Group`[new$`Age Group`=="70 to 79 Years"] <- "70-79"
-new$`Age Group`[new$`Age Group`=="80 to 89 Years"] <- "80-89"
-new$`Age Group`[new$`Age Group`=="90 and older"] <- "Above 90"
-```
-
-```{r, fig.cap="Effect of COVID-19 on different Age Groups", echo=FALSE, warning=FALSE, message = FALSE, fig.width=8, fig.height=3}
-ggplot(new, aes(x=`Age Group`, y=`Rate`,group = `Type`, color = `Type`)) +
-    geom_line()
-```
-
-From the figure and table, it's clear that there is some correlation between people's age and the effect of COVID-19. As people's age increase, the mortality and hospitalization rate grow almost exponentially, the mortality rate of kid under 19 years old is 0.00007, but this number increases to 0.23 when the person is older than 90, which is a factor of 3285. Study also shows that "adults over 65 years of age represent 80% of hospitalizations and have a 23-fold greater risk of death than those under 65" [@mueller]. The reason for this is that as people age, their immune system function will gradually decline, which makes them more vulnerable to virus. Another reason is that older people are more likely to have underlying health conditions such as diabetes and high blood pressure. Those health conditions will worsen the symptom of COVID-19 and make it more fatal.
-
-## The effect of COVID-19 on different communities in Toronto
-The next thing we will explore is the effect of COVID-19 on different communities in Toronto. After grouping by and sorting the data using R [@citeR], Figure 2 is produced with ggplot2 [@plot]. The figure plots the top 10 communities with the most COVID-19 infections, a quick research shows those are mostly low-income communities or neighborhoods that have a large population density. This is because most jobs with low income require the worker to have much more in-person interactions with other people, thus increasing the risk of COVID-19 infection. And a high-density neighborhood usually has a lot of apartment buildings, and it's relatively easier for the virus to spread within an apartment building because people are sharing lots of things such as air vents and elevators. This finding shows that COVID-19 situations vary across different communities and it maybe beneficial if the government starts to enforce different procedures based on different communities.
-
-```{r, include = FALSE}
-# Group covid case by Neighbourhood Name
-covid_combined_by_postal_code <-
-  group_by(covid19_cases_cleaned, `Neighbourhood Name`) %>%
-  summarize(n())
-names(covid_combined_by_postal_code)[names(covid_combined_by_postal_code) == 'n()'] <- 'n'
-```
-
-
-```{r, include = FALSE}
-# Sort by case counts, and get the first 10
-total_case_by_postal_sorted <- covid_combined_by_postal_code[order(-covid_combined_by_postal_code$n),]
-total_case_by_postal_sorted
-top_10 <- total_case_by_postal_sorted[1:10, ]
-top_10
-```
-
-
-\pagebreak
-```{r, fig.cap="Effect of COVID-19 on different communities", echo=FALSE, warning=FALSE, message = FALSE, fig.width=10, fig.height=4}
-ggplot(data=top_10, aes(x = reorder(`Neighbourhood Name`, n), y=n)) +
-  geom_bar(stat="identity", position=position_dodge()) + coord_flip()
-```
-
-# Conclusion
-Our findings clearly revealed that COVID-19 hits certain people and neighborhoods harder and they require more attention from the government. Luckily, the City of Toronto is aware of this situation and have launched support programs
-targeting those neighborhoods. For instance, the City of Toronto is offering free self-isolation sites for those people diagnosed with COVID-19 and is also giving seniors and people with underlying health conditions top priority in the vaccination program.
-
-\pagebreak
-
-# References
+# Discussion
