@@ -4,22 +4,232 @@ author:
   - Lantao Cui
 thanks: "Code and data are available at: https://github.com/cuilantao/Toronto-s-reaction-to-fight-against-global-warming"
 date: "`r format(Sys.time(), '%d %B %Y')`"
-abstract: "Climate change and global warming are predominant problems nowadays, in the north pole, polar ice caps are melting at a rate of almost 14% per decade. On top of that, over the past 30 years, the oldest and thickest ice in the north pole has declined by almost 95%. The majority of the Science Community believes that global warming is caused by the excessive emission of greenhouse gases such as Carbon Dioxide and Methane. Luckily, a lot of countries are actively trying to limit the emission of such gases to fight against climate change. In this paper, we will obtain and analyze different Toronto organizations' Energy consumption and Green House Gas emissions from 2011 to 2017. Our findings can help the city government to establish better climate strategies."
+abstract: "Climate change and global warming are predominant problems nowadays, in the north pole, polar ice caps are melting at a rate of almost 14% per decade. On top of that, over the past 30 years, the oldest and thickest ice in the north pole has declined by almost 95%. The majority of the Science Community believes that global warming is caused by the excessive emission of greenhouse gases such as Carbon Dioxide and Methane. Luckily, people are getting more and more aware of the global change and are willing to make changes. In this paper, we obtain a survey conducted on Toronto's residents about their perceptions of climate change and their willingness to take action on it. We aim to find out the impact of demographic factors such as personal income on people's perception of climate change."
 output:
   bookdown::pdf_document2
 toc: FALSE
 bibliography: references.bib
 ---
 
+```{r setup, include = FALSE}
+# Import all necessary libraries
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(palmerpenguins)
+library(kableExtra)
+library(here)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(readxl)
+library(plotrix)
+# Read the dataset, use here to navigate to working directory
+global_avg_temperature <- read_csv(here::here("inputs/data/GlobalTemperatures.csv"))
+
+#annual_energy_2011 <- read_csv(here::here("inputs/data/energy-2011.csv"))
+#annual_energy_2012 <- read_csv(here::here("inputs/data/energy-2012.csv"))
+#annual_energy_2013 <- read_csv(here::here("inputs/data/energy-2013.csv"))
+#annual_energy_2014 <- read_csv(here::here("inputs/data/energy-2014.csv"))
+#annual_energy_2015 <- read_csv(here::here("inputs/data/energy-2015.csv"))
+#annual_energy_2016 <- read_csv(here::here("inputs/data/energy-2016.csv"))
+#annual_energy_2017 <- read_csv(here::here("inputs/data/energy-2017.csv"))
+#annual_energy_2018 <- read_csv(here::here("inputs/data/energy-2018.csv"))
+climate_perception <- read_csv(here::here("inputs/data/survey.csv"))
+```
+
+
 # Introduction
 
-Ever since Industrial Revolution, people's life has become more and more convenient, for example, the invention of the steam engine made transportation much more easier. However, this convenience comes with great drawbacks, over the entire industrial revolution, scientist estimated that a total of 2.3 trillion tonnes of Carbon Dioxide have been released into the atmosphere, what is even worse is that those Carbon Dioxide has a life span of 300 - 1000 years, this means that those climate change can happen on the time scale of many generations' lives. The reason those green house gases cause global warming is because they will reflect the heat radiated from Earths' surface back, thus making the Earth warmer. However, hundreds of nations are actively trying to fight against Climate Change, some are planting more trees so that the excessive Carbon Dioxide can be absorbed through Photosynthesis, some are developing more sustainable and environment-free energy source such as solar power. In this paper, we will obtain and analyze different Toronto organizations' Energy consumption and Green House Gas emissions from 2011 to 2017, we aim to find out Toronto's contribution in limiting the emission of green house gases.
+Ever since Industrial Revolution, people's life has become more and more convenient, for example, the invention of the steam engine made transportation much more easier. However, this convenience comes with great drawbacks, over the entire industrial revolution, scientist estimated that a total of 2.3 trillion tonnes of Carbon Dioxide have been released into the atmosphere, what is even worse is that those Carbon Dioxide has a life span of 300 - 1000 years, this means that those climate change can happen on the time scale of many generations' lives. The reason those green house gases cause global warming is because they will reflect the heat radiated from Earths' surface back, thus making the Earth warmer. Figure \@ref(fig:land-average-temperature) shows the average land temperature on Earth in the past 100 years, Figure \@ref(fig:ocean-average-temperature) shows the average Ocean temperature on Earth in the past 100 years, the data are obtained from Berkeley Earth Data Portal [@berkeleyearth].
+
+```{r land-average-temperature, fig.cap='Land Average Temperature', echo=FALSE, warning=FALSE, message = FALSE, fig.width=5, fig.height=3, fig.pos = "!H"}
+# Part of the below code are from https://www.kaggle.com/code/jagelves/continental-us-climate-change-1850-2013/report?scriptVersionId=0
+cleaned_avg_temp <- global_avg_temperature %>%
+  separate(col = dt, into = c("Year", "Month", "Day"), convert = TRUE)
+cleaned_avg_temp <- na.omit(cleaned_avg_temp)
+
+Land_Avg_sum <- cleaned_avg_temp %>% 
+  filter(Year>1850) %>%
+  group_by(Year) %>% 
+  summarise(AverageTemperature = mean(LandAverageTemperature))
+
+qplot(Year, AverageTemperature, data=Land_Avg_sum, main="Land Average Temperature 1850-2013",geom=c("point","smooth"))+ aes(colour = AverageTemperature) + scale_color_gradient(low="blue", high="red")
+
+```
+
+```{r ocean-average-temperature, fig.cap='Ocean Average Temperature', echo=FALSE, warning=FALSE, message = FALSE, fig.width=5, fig.height=3, fig.pos = "!H"}
+# Part of the below code are from https://www.kaggle.com/code/jagelves/continental-us-climate-change-1850-2013/report?scriptVersionId=0
+cleaned_avg_temp <- global_avg_temperature %>%
+  separate(col = dt, into = c("Year", "Month", "Day"), convert = TRUE)
+cleaned_avg_temp <- na.omit(cleaned_avg_temp)
+
+Land_Avg_sum <- cleaned_avg_temp %>% 
+  filter(Year>1850) %>%
+  group_by(Year) %>% 
+  summarise(AverageTemperature = mean(LandAverageTemperature))
+
+qplot(Year, AverageTemperature, data=Land_Avg_sum, main="Ocean Average Temperature 1850-2013",geom=c("point","smooth"))+ aes(colour = AverageTemperature) + scale_color_gradient(low="blue", high="red")
+
+```
+
+From the above two figures, it is very clear that the Earth's temperature is increasing rapidly after the Industrial Revolution. Based on research, Earth's temperature has risen by 0.08 Celsius per decade since 1880, and the rate of warming over the past 40 years is more than twice of that, 0.18 Celsius per decade. People might develop the illusion that because this looks like a very small increase, it will have little or no impact on Earth's environment. However, this is wrong, the total volume of the Ocean on Earth is around 1.335 billion cubic kilometers, therefore, a tremendous amount of energy is required to heat up the ocean [@dahlman].
+
+Global warming has been regarded as a high-risk problem globally because it will trigger a chain of events. For instance, the increased temperature will melt polar ice caps, then those ice water will be released into the ocean, causing the global sea level to rise. This could trigger a series of events, for example, the salinity of the ocean will decrease because of this large amount of fresh water, and the decreased salinity is deleterious for certain species such as coral reef, which is a keystone species, meaning its extinction is disastrous to the entire ecosystem. Moreover, the melting of the polar ice cap will reveal the black soil under it, those black soil will then absorb more energy from the sun, thus exacerbating global warming.
+
+Luckily, hundreds of nations are actively trying to fight Climate Change, some are planting more trees so that the excessive Carbon Dioxide can be absorbed through Photosynthesis, and some are developing more sustainable and environment-free energy sources such as solar power. Toronto, for example, proposed an ambitious plan called TransformTO, its goal is to achieve net-zero greenhouse gas emissions. However, everyone has a different level of education, hence it is common for people to hold different opinions about climate change. It is reasonable to believe that a university student majoring in environmental science will be more concerned about global warming than someone with high school education. To find out if there is a relationship between people's perception of climate change and their demographic factors such as income, level of education, and age, we obtained a city-wide climate perception survey dataset from the City of Toronto Data Portal [@opendatator]. On top of that, the report written by the City of Toronto was also helpful [@report].
+
 
 # Data
+We started our data analysis by using R [@citeR], dplyr[@dplyr], tidyverse[@tidyverse], here[@here]. Graphs are generated using ggplot2[@ggplot2], kableExtra[@kableExtra], and gridExtra[@gridExtra].
 
-## Data Source
+## Data Source and Collection
+The dataset I will be using are from the City of Toronto Data Portal, it is conducted city-wide to gather people's opinion on climate change [@opendatator], the goal of this survey is to capture their perceptions about climate change and to estimate people's willingness to take actions and help the city government to establish the goal of achieving net-zero carbon dioxide emission. The survey is conducted online and a total of 404 results were received between October 11 to October 18, 2018. All survey respondents are adult residents living in the City of Toronto. All respondents are from 4 geological areas: Etobicoke-York, North York, Scarborough, and Toronto and East York, Figure \@ref(fig:respondents-number) is a bar graph showing the number of respondents from each area. 
 
-## Methodology and Data Collection
+```{r respondents-number, fig.cap='Number of Respondents from Each Area', echo=FALSE, warning=FALSE, message = FALSE, fig.width=5, fig.height=3, fig.pos = "!H"}
+number_from_each_area <- c(99, 101, 91, 113)
+area_name <- c("Etobicoke-York", "North York", "Scarborough", "Toronto and East York")
+ggplot() + geom_bar(aes(x=area_name,y=number_from_each_area), stat='identity') + xlab('Area') + ylab('Number of Respondents')
+```
+
+Other than coming from different city areas, respondents also have different demographic backgrounds, For instance, some respondents have a household income of more than $150000 while some respondents only have a household income lower than $40000. The respondents also have a big age variety with some people being 65 years old and some only 20 years old. Below are some figures showing the distribution of the respondents based on their demographic factors. Figure \@ref(fig:agesum) shows the distributions of respondents based on their age, Figure \@ref(fig:incomesum) shows the distribution of respondents based on their household income. Finally, Figure \@ref(fig:edulevel) shows the distribution of respondents based on their level of education.
+
+```{r agesum, fig.cap='Number of Respondents Based on Age', echo=FALSE, warning=FALSE, message = FALSE, fig.width=5, fig.height=3, fig.pos = "!H"}
+
+# Below we will find the age distribution of all the respondents
+
+age_of_all_respondents <- climate_perception %>% filter(`HIDAGE1` != 'NA');
+age_of_all_respondents <- age_of_all_respondents["HIDAGE1"]
+age_group <- age_of_all_respondents %>% mutate(cuts = cut(HIDAGE1, c(17, 25, 40, 55, 65, 150))) %>% 
+  group_by(cuts) %>% 
+  summarize(n=n())
+
+
+levels(age_group$cuts) <- c("18 to 25", "25 to 40", "40 to 55", "55 to 65", "65+")
+
+ggplot(data=age_group, aes(x = reorder(`cuts`, n), y=n)) +
+  geom_bar(stat="identity", position=position_dodge()) + coord_flip() + xlab('Area') + ylab('Age Range')
+
+```
+
+```{r incomesum, fig.cap='Number of Respondents Based on Household Income', echo=FALSE, warning=FALSE, message = FALSE, fig.width=5, fig.height=3, fig.pos = "!H"}
+
+# Below we will find the income distribution of all the respondents
+
+income_of_all_respondents <- climate_perception %>% filter(`QD6` != 'Prefer not to answer');
+income_of_all_respondents <- income_of_all_respondents["QD6"]
+
+respondents_grouped_by_income <-
+  group_by(income_of_all_respondents, `QD6`) %>%
+  summarize(n())
+
+names(respondents_grouped_by_income)[names(respondents_grouped_by_income) == 'n()'] <- 'n'
+
+ggplot(data=respondents_grouped_by_income, aes(x = reorder(`QD6`, n), y=n)) +
+  geom_bar(stat="identity", position=position_dodge()) + coord_flip() + xlab('Household Income') + ylab('Number of Respondents')
+```
+
+
+```{r edulevel, fig.cap='Number of Respondents Based on level of education', echo=FALSE, warning=FALSE, message = FALSE, fig.width=5, fig.height=4, fig.pos = "!H"}
+
+# Below we will find the education distribution of all the respondents
+
+education_of_all_respondents <- climate_perception["QD5"]
+
+respondents_grouped_by_education <-
+  group_by(education_of_all_respondents, `QD5`) %>%
+  summarize(n())
+
+names(respondents_grouped_by_education)[names(respondents_grouped_by_education) == 'n()'] <- 'n'
+names(respondents_grouped_by_education)[names(respondents_grouped_by_education) == 'QD5'] <- 'Education Level'
+
+ggplot(data=respondents_grouped_by_education, aes(x ='', y=n, fill = `Education Level`))  + geom_bar(stat = "Identity", width = 4, color = "Yellow") + coord_polar("y", start = 0) + theme_void()
+```
+
+## Relationship between People's Awareness of Climate Change and Various Demographic Factors
+
+Our ultimate goal is to develop a statistical model which takes a person's demographic factor as input, and try to predict whether that person will be concerned about global climate change. To do this, we will first take a look at different demographic factors, and determine whether it is relevant.
+
+### Age
+
+Although it is a consensus that global climate change is a problem that needs to be addressed, people from different age groups might view it differently. Based on research conducted by the Pew Research Center [@ageper], scientists found out that Gen Z (Born after 1996) and Millennials (Born between 1981 and 1996) are usually more concerned about global climate change than the older generations. There are several reasons for this, for example, these generations generally have more access to the internet, which means they are seeing a lot of climate change content online.
+
+We will now take a look at our survey results and determine whether age is a relevant factor. The second question in the survey is "For each of the following, how concerned are you about climate change?", the respondents can choose one from the following: "Extremely concerned, Very concerned, Not very concerned, Not at all concerned, Don’t know". For simplicity, we will group *Extremely concerned* and *Very concerned* into a big category called *Concerned*, and we will group *Not very concerned* and *Not at all concerned* into a big category called *Not Concerned*, we will neglect *Don't know* answers. Figure \@ref(fig:ageconcern) is a summary table.
+
+```{r ageconcern, fig.cap='Concern about Climate Change Based on Age Group', echo=FALSE, warning=FALSE, message = FALSE, fig.width=5, fig.height=4, fig.pos = "!H"}
+age_relevant_data <- subset(climate_perception, select = c(`HIDAGE1`, `Q1r1`))
+names(age_relevant_data)[names(age_relevant_data) == 'HIDAGE1'] <- 'Age'
+names(age_relevant_data)[names(age_relevant_data) == 'Q1r1'] <- 'Concern'
+
+age_relevant_data <- age_relevant_data %>% filter(!str_detect(Concern, "D"))
+
+age_relevant_data$`Concern`[age_relevant_data$`Concern`=="Extremely concerned"] <- "Concerned"
+age_relevant_data$`Concern`[age_relevant_data$`Concern`=="Very concerned"] <- "Concerned"
+
+age_relevant_data$`Concern`[age_relevant_data$`Concern`=="Not very concerned"] <- "Not Concerned"
+age_relevant_data$`Concern`[age_relevant_data$`Concern`=="Not at all concerned"] <- "Not Concerned"
+
+
+final_age_relevant_data <- age_relevant_data %>% mutate(cuts = cut(Age, c(17, 25, 40, 55, 65, 150))) %>% group_by(cuts, Concern) %>% 
+  summarize(n=n())
+
+final_age_relevant_data <- group_by(final_age_relevant_data, cuts) %>% transmute(Concern, percent = round(n/sum(n),2 ))
+
+levels(final_age_relevant_data$cuts) <- c("18 to 25", "25 to 40", "40 to 55", "55 to 65", "65+") 
+
+final_age_relevant_data %>%
+  knitr::kable(caption = "Concern about Climate Change Based on Age Group",
+               col.names = c("Age Group", "Cocern Level", "Percentage WRT Age Group"),
+               align = c('l', 'l', 'l'),
+               booktabs = T) %>%
+  kable_styling(full_width = T, latex_options = "hold_position")
+```
+
+However, the survey suggests something different, we can see that people who is older than 65 years old are much more concerned about climate change than the younger generations. 
+
+### Household income
+
+We will also take a look at how household income affect people's opinion on global climate change. In this survey, income are separated into 6 different categories: *Under $40,000*, *$40,001 to $60,000*, *$60,001 to $80,000*, *$80,001 to $100,000*, *$100,001 to $150,000*, *More than $150,000*. Because this will be used as an input to the statistical model, we will simplify those ranges by taking its median, therefore, those range will become: *$30000*, *$50000*, *$70000*, *$90000*, *$125000*, *$200000*. (The Under 50000 and over 150000 are slightly adjusted). Figure \@ref(fig:incomeconcern) is a summary table.
+
+```{r incomeconcern, fig.cap='Concern about Climate Change Based on Household Income', echo=FALSE, warning=FALSE, message = FALSE, fig.width=5, fig.height=4, fig.pos = "!H"}
+income_relevant_data <- subset(climate_perception, select = c(`QD6`, `Q1r1`))
+names(income_relevant_data)[names(income_relevant_data) == 'QD6'] <- 'Household Income'
+names(income_relevant_data)[names(income_relevant_data) == 'Q1r1'] <- 'Concern'
+
+income_relevant_data <- income_relevant_data %>% filter(!str_detect(`Household Income`, "P"))
+income_relevant_data <- income_relevant_data %>% filter(!str_detect(`Concern`, "D"))
+
+income_relevant_data$`Concern`[income_relevant_data$`Concern`=="Extremely concerned"] <- "Concerned"
+income_relevant_data$`Concern`[income_relevant_data$`Concern`=="Very concerned"] <- "Concerned"
+
+income_relevant_data$`Concern`[income_relevant_data$`Concern`=="Not very concerned"] <- "Not Concerned"
+income_relevant_data$`Concern`[income_relevant_data$`Concern`=="Not at all concerned"] <- "Not Concerned"
+
+income_relevant_data$`Household Income`[income_relevant_data$`Household Income`=="Under $40,000"] <- 30000
+income_relevant_data$`Household Income`[income_relevant_data$`Household Income`=="$100,001 to $150,000"] <- 125000
+income_relevant_data$`Household Income`[income_relevant_data$`Household Income`=="More than $150,000"] <- 200000
+income_relevant_data$`Household Income`[income_relevant_data$`Household Income`=="$40,001 to $60,000"] <- 50000
+income_relevant_data$`Household Income`[income_relevant_data$`Household Income`=="$80,001 to $100,000"] <- 90000
+income_relevant_data$`Household Income`[income_relevant_data$`Household Income`=="$60,001 to $80,000"] <- 70000
+
+final_income_relevant_data <- income_relevant_data %>% group_by(`Household Income`, `Concern`) %>% 
+    summarize(n=n())
+
+
+final_income_relevant_data <- group_by(final_income_relevant_data, `Household Income`) %>% transmute(Concern, percent = round(n/sum(n),2))
+
+
+final_income_relevant_data %>%
+  knitr::kable(caption = "Concern about Climate Change Based on Household income",
+               col.names = c("Household Income", "Cocern Level", "Percentage WRT Household Income"),
+               align = c('l', 'l', 'l'),
+               booktabs = T) %>%
+  kable_styling(full_width = T, latex_options = "hold_position")
+```
+
+From the table, residents that are most concerned about climate change are people with household income between 80K and 100K.
+
+
+
 
 # Results
 
