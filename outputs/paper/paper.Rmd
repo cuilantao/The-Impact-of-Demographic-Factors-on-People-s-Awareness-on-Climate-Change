@@ -1,10 +1,11 @@
 ---
-title: "Toronto's Reaction to Fight Against Global Warming"
+title: "Woman and People with High Level of Education are More Concerend About Global Climate Change"
 author: 
   - Lantao Cui
 thanks: "Code and data are available at: https://github.com/cuilantao/Toronto-s-reaction-to-fight-against-global-warming"
 date: "`r format(Sys.time(), '%d %B %Y')`"
-abstract: "Climate change and global warming are predominant problems nowadays, in the north pole, polar ice caps are melting at a rate of almost 14% per decade. On top of that, over the past 30 years, the oldest and thickest ice in the north pole has declined by almost 95%. The majority of the Science Community believes that global warming is caused by the excessive emission of greenhouse gases such as Carbon Dioxide and Methane. Luckily, people are getting more and more aware of the global change and are willing to make changes. In this paper, we obtain a survey conducted on Toronto's residents about their perceptions of climate change and their willingness to take action on it. We aim to find out the impact of demographic factors such as personal income on people's perception of climate change."
+abstract: "Climate change and global warming are predominant problems nowadays, in the north pole, polar ice caps are melting at a rate of almost 14% per decade. On top of that, over the past 30 years, the oldest and thickest ice in the north pole has declined by almost 95%. The majority of the Science Community believes that global warming is caused by the excessive emission of greenhouse gases such as Carbon Dioxide and Methane. Luckily, people are getting more and more aware of the global climate change and are willing to make changes. In this paper, we obtain a survey conducted on Toronto's residents about their perceptions of climate change and their willingness to take action on it. We aim to find out the impact of demographic factors such as personal income on people's perception of climate change. After careful investigation, we found out that woman and highly educated people are most concerned about climate change. Our findings can help the government to design better strategies to fight against global warming.\\par
+ \\textbf{Keywords:} Climate Change, Demographic Factor, Gender, Income, Education, Age, Concern, Model"
 output:
   bookdown::pdf_document2
 toc: FALSE
@@ -42,6 +43,7 @@ cleaned_avg_temp <- global_avg_temperature %>%
   separate(col = dt, into = c("Year", "Month", "Day"), convert = TRUE)
 cleaned_avg_temp <- na.omit(cleaned_avg_temp)
 
+# group by year and draw the plot
 Land_Avg_sum <- cleaned_avg_temp %>% 
   filter(Year>1850) %>%
   group_by(Year) %>% 
@@ -57,6 +59,7 @@ cleaned_avg_temp <- global_avg_temperature %>%
   separate(col = dt, into = c("Year", "Month", "Day"), convert = TRUE)
 cleaned_avg_temp <- na.omit(cleaned_avg_temp)
 
+# group by year and draw the plot
 Land_Avg_sum <- cleaned_avg_temp %>% 
   filter(Year>1850) %>%
   group_by(Year) %>% 
@@ -66,21 +69,21 @@ qplot(Year, AverageTemperature, data=Land_Avg_sum, main="Ocean Average Temperatu
 
 ```
 
-From the above two figures, it is very clear that the Earth's temperature is increasing rapidly after the Industrial Revolution. Based on research, Earth's temperature has risen by 0.08 Celsius per decade since 1880, and the rate of warming over the past 40 years is more than twice of that, 0.18 Celsius per decade. People might develop the illusion that because this looks like a very small increase, it will have little or no impact on Earth's environment. However, this is wrong, the total volume of the Ocean on Earth is around 1.335 billion cubic kilometers, therefore, a tremendous amount of energy is required to heat up the ocean [@dahlman].
+From the above two figures, it is very clear that the Earth's temperature is increasing rapidly after the Industrial Revolution. Based on research, Earth's ocean temperature has risen by 0.08 Celsius per decade since 1880, and the rate of warming over the past 40 years is more than twice of that, 0.18 Celsius per decade. People might develop the illusion that because this looks like a very small increase, it will have little or no impact on Earth's environment. However, this is wrong, the total volume of the Ocean on Earth is around 1.335 billion cubic kilometers, therefore, a tremendous amount of energy is required to heat up the ocean [@dahlman].
 
 Global warming has been regarded as a high-risk problem globally because it will trigger a chain of events. For instance, the increased temperature will melt polar ice caps, then those ice water will be released into the ocean, causing the global sea level to rise. This could trigger a series of events, for example, the salinity of the ocean will decrease because of this large amount of fresh water, and the decreased salinity is deleterious for certain species such as coral reef, which is a keystone species, meaning its extinction is disastrous to the entire ecosystem. Moreover, the melting of the polar ice cap will reveal the black soil under it, those black soil will then absorb more energy from the sun, thus exacerbating global warming.
 
-Luckily, hundreds of nations are actively trying to fight Climate Change, some are planting more trees so that the excessive Carbon Dioxide can be absorbed through Photosynthesis, and some are developing more sustainable and environment-free energy sources such as solar power. Toronto, for example, proposed an ambitious plan called TransformTO, its goal is to achieve net-zero greenhouse gas emissions. However, everyone has a different level of education, hence it is common for people to hold different opinions about climate change. It is reasonable to believe that a university student majoring in environmental science will be more concerned about global warming than someone with high school education. To find out if there is a relationship between people's perception of climate change and their demographic factors such as income, level of education, and age, we obtained a city-wide climate perception survey dataset from the City of Toronto Data Portal [@opendatator]. On top of that, the report written by the City of Toronto was also helpful [@report].
+Luckily, hundreds of nations are actively trying to fight Climate Change, some are planting more trees so that the excessive Carbon Dioxide can be absorbed through Photosynthesis, and some are developing more sustainable and environment-free energy sources such as solar power. Toronto, for example, proposed an ambitious plan called TransformTO, its goal is to achieve net-zero greenhouse gas emissions. However, everyone is different, hence it is common for people to hold different opinions about climate change. It is reasonable to believe that a university student majoring in environmental science will be more concerned about global warming than someone with high school education. To find out if there is a relationship between people's perception of climate change and their demographic factors such as income, level of education, and age, we obtained a city-wide climate perception survey dataset from the City of Toronto Data Portal [@opendatator]. On top of that, the report written by the City of Toronto was also helpful [@report]. After running a series of analysis on the survey, we found out that woman and highly educated people are most concerned about the global climate change.
 
 
 # Data
 We started our data analysis by using R [@citeR], dplyr[@dplyr], tidyverse[@tidyverse], here[@here]. Graphs are generated using ggplot2[@ggplot2], kableExtra[@kableExtra], and gridExtra[@gridExtra].
 
 ## Data Source and Collection
-The dataset I will be using are from the City of Toronto Data Portal, it is conducted city-wide to gather people's opinion on climate change [@opendatator], the goal of this survey is to capture their perceptions about climate change and to estimate people's willingness to take actions and help the city government to establish the goal of achieving net-zero carbon dioxide emission. The survey is conducted online and a total of 404 results were received between October 11 to October 18, 2018. All survey respondents are adult residents living in the City of Toronto. 
+The dataset I will be using is from the City of Toronto Data Portal, it is conducted city-wide to gather people's opinions on climate change [@opendatator], the goal of this survey is to capture their perceptions about climate change and to estimate people's willingness to take actions and help the city government to establish the goal of achieving net-zero carbon dioxide emission. The survey is conducted online and a total of 404 results were received between October 11 to October 18, 2018. All survey respondents are adult residents living in the City of Toronto. 
 
 ## Data Overview
-All respondents are from 4 geological areas: Etobicoke-York, North York, Scarborough, and Toronto and East York, Figure \@ref(fig:respondents-number) is a bar graph showing the number of respondents from each area. Other than coming from different city areas, respondents also have different demographic backgrounds, For instance, some respondents have a household income of more than $150000 while some respondents only have a household income lower than $40000. The respondents also have a big age variety with some people being 65 years old and some only 20 years old. Below are some figures showing the distribution of the respondents based on their demographic factors. Figure \@ref(fig:agesum) shows the distributions of respondents based on their age, Figure \@ref(fig:incomesum) shows the distribution of respondents based on their household income. Finally, Figure \@ref(fig:edulevel) shows the distribution of respondents based on their level of education.
+All respondents are from 4 geological areas: Etobicoke-York, North York, Scarborough, Toronto and East York, Figure \@ref(fig:respondents-number) is a bar graph showing the number of respondents from each area. Other than coming from different city areas, respondents also have different demographic backgrounds, For instance, some respondents have a household income of more than $150000 while some respondents only have a household income lower than $40000. The respondents also have a big age variety with some people being 65 years old and some only 20 years old. Below are some figures showing the distribution of the respondents based on their demographic factors. Figure \@ref(fig:agesum) shows the distributions of respondents based on their age, Figure \@ref(fig:incomesum) shows the distribution of respondents based on their household income. Finally, Figure \@ref(fig:edulevel) shows the distribution of respondents based on their level of education.
 
 
 ```{r respondents-number, fig.cap='Number of Respondents from Each Area', echo=FALSE, warning=FALSE, message = FALSE, fig.width=5, fig.height=2.5, fig.pos = "!H"}
@@ -95,11 +98,13 @@ ggplot() + geom_bar(aes(x=area_name,y=number_from_each_area), stat='identity') +
 
 age_of_all_respondents <- climate_perception %>% filter(`HIDAGE1` != 'NA');
 age_of_all_respondents <- age_of_all_respondents["HIDAGE1"]
+
+# We will categorize age into 6 different groups by using the mutate function
 age_group <- age_of_all_respondents %>% mutate(cuts = cut(HIDAGE1, c(17, 25, 40, 55, 65, 150))) %>% 
   group_by(cuts) %>% 
   summarize(n=n())
 
-
+# Change Column name
 levels(age_group$cuts) <- c("18 to 25", "25 to 40", "40 to 55", "55 to 65", "65+")
 
 ggplot(data=age_group, aes(x = reorder(`cuts`, n), y=n)) +
@@ -114,12 +119,14 @@ ggplot(data=age_group, aes(x = reorder(`cuts`, n), y=n)) +
 income_of_all_respondents <- climate_perception %>% filter(`QD6` != 'Prefer not to answer');
 income_of_all_respondents <- income_of_all_respondents["QD6"]
 
+# Group responses by income range
 respondents_grouped_by_income <-
   group_by(income_of_all_respondents, `QD6`) %>%
   summarize(n())
 
 names(respondents_grouped_by_income)[names(respondents_grouped_by_income) == 'n()'] <- 'n'
 
+# Plot the summary
 ggplot(data=respondents_grouped_by_income, aes(x = reorder(`QD6`, n), y=n)) +
   geom_bar(stat="identity", position=position_dodge()) + coord_flip() + xlab('Household Income') + ylab('Number of Respondents')
 ```
@@ -131,10 +138,12 @@ ggplot(data=respondents_grouped_by_income, aes(x = reorder(`QD6`, n), y=n)) +
 
 education_of_all_respondents <- climate_perception["QD5"]
 
+# Group response by people's level of education
 respondents_grouped_by_education <-
   group_by(education_of_all_respondents, `QD5`) %>%
   summarize(n())
 
+# Change column names and plot the data.
 names(respondents_grouped_by_education)[names(respondents_grouped_by_education) == 'n()'] <- 'n'
 names(respondents_grouped_by_education)[names(respondents_grouped_by_education) == 'QD5'] <- 'Education Level'
 
@@ -145,7 +154,7 @@ ggplot(data=respondents_grouped_by_education, aes(x ='', y=n, fill = `Education 
 \newpage
 # Models
 
-Since our goal is to find out the impacts of demographic factors such as age, gender, income and education on one's awareness of global climate change. We will build a statistical model which takes those demographic factor as input, and output a binary variable indicating if this person will be concerned about climate change. The model will behave like the following where $\alpha_i$ denotes the $i^{th}$ demographic factor.
+Since our goal is to find out the impacts of demographic factors such as age, gender, income and education on one's awareness of global climate change. We will build a statistical model which takes that demographic factor as input and output a binary variable indicating if this person will be concerned about climate change. The model will behave like the following where $\alpha_i$ denotes the $i^{th}$ demographic factor.
 
 $$f(\alpha_0, \alpha_1, \alpha_2, \alpha_3 ...) = 0\;or\;1$$
 
@@ -174,13 +183,13 @@ Because the vast majority respondents' gender is male or female. We will neglect
 
 ### Income
 
-The survey divides people's household income into 4 subgroups: *Under $40,000*, *$40,001 to $60,000*, *$60,001 to $80,000*, *$80,001 to $100,000*, *$100,001 to $150,000*, *More than $150,000*. We will use *$30000*, *$50000*, *$70000*, *$90000*, *$125000*, *$200000* to represent them respectively.\
+The survey divides people's household income into 4 subgroups: *Under $40,000*, *$40,001 to $60,000*, *$60,001 to $80,000*, *$80,001 to $100,000*, *$100,001 to $150,000*, *More than $150,000*. We will use numbers 1 through 6 to represent them respectively.
 
 ### Level of Education
 
-We will divide people's level of education into 3 groups: *High School or Less*, *Undergraduate Degree*, *Post Graduate Degree/Professional School*. We will use number 1 to 3 to represent each one of them respectively.
+We will divide people's level of education into 3 groups: *High School or Less*, *Undergraduate Degree*, *Post Graduate Degree/Professional School*. We will use numbers 1 to 3 to represent each one of them respectively.
 
-Above is a summary of the model and indepedent variables we will be using, more details will be presented in the Results section.
+Above is a summary of the model and all the independent variables we will be using, more details will be presented in the Results section.
 
 # Results
 
@@ -188,33 +197,37 @@ We will first talk about each independent variable in more detail.
 
 ## Relationship between People's Awareness of Climate Change and Various Demographic Factors
 
-Our ultimate goal is to develop a statistical model which takes a person's demographic factor as input, and try to predict whether that person will be concerned about global climate change. To do this, we will take a look at different demographic factors, and determine their impacts in the model.
+Our ultimate goal is to develop a statistical model which takes a person's demographic factor as input and tries to predict whether that person will be concerned about global climate change. To do this, we will take a look at different demographic factors, and determine their impacts on the model.
 
 ### Age
 
 Although it is a consensus that global climate change is a problem that needs to be addressed, people from different age groups might view it differently. Based on research conducted by the Pew Research Center [@ageper], scientists found out that Gen Z (Born after 1996) and Millennials (Born between 1981 and 1996) are usually more concerned about global climate change than the older generations. There are several reasons for this, for example, these generations generally have more access to the internet, which means they are seeing a lot of climate change content online.
 
-We will now take a look at our survey results and determine whether age is a relevant factor. The second question in the survey is "For each of the following, how concerned are you about climate change?", the respondents can choose one from the following: "Extremely concerned, Very concerned, Not very concerned, Not at all concerned, Don’t know". For simplicity, we will group *Extremely concerned* and *Very concerned* into a big category called *Concerned*, and we will group *Not very concerned* and *Not at all concerned* into a big category called *Not Concerned*, we will neglect *Don't know* answers. Table \@ref(tab:ageconcern) is a summary table. However, the table suggests something different, we can see that people who is older than 65 years old are much more concerned about climate change than the younger generations. 
+We will now take a look at our survey results and determine whether age is a relevant factor. The second question in the survey is "For each of the following, how concerned are you about climate change?", the respondents can choose one from the following: "Extremely concerned, Very concerned, Not very concerned, Not at all concerned, Don’t know". For simplicity, we will group *Extremely concerned* and *Very concerned* into a big category called *Concerned*, and we will group *Not very concerned* and *Not at all concerned* into a big category called *Not Concerned*, we will neglect *Don't know* answers. Table \@ref(tab:ageconcern) is a summary table. However, the table suggests something different, we can see that people who are older than 65 years old are much more concerned about climate change than the younger generations. 
 
 ```{r ageconcern, fig.cap='Concern about Climate Change Based on Age Group', echo=FALSE, warning=FALSE, message = FALSE, fig.width=5, fig.height=4, fig.pos = "!H"}
+
+# Select column and change their name
 age_relevant_data <- subset(climate_perception, select = c(`HIDAGE1`, `Q1r1`))
 names(age_relevant_data)[names(age_relevant_data) == 'HIDAGE1'] <- 'Age'
 names(age_relevant_data)[names(age_relevant_data) == 'Q1r1'] <- 'Concern'
 
 age_relevant_data <- age_relevant_data %>% filter(!str_detect(Concern, "D"))
 
+# Group concern level into 2 big groups
 age_relevant_data$`Concern`[age_relevant_data$`Concern`=="Extremely concerned"] <- "Concerned"
 age_relevant_data$`Concern`[age_relevant_data$`Concern`=="Very concerned"] <- "Concerned"
 
 age_relevant_data$`Concern`[age_relevant_data$`Concern`=="Not very concerned"] <- "Not Concerned"
 age_relevant_data$`Concern`[age_relevant_data$`Concern`=="Not at all concerned"] <- "Not Concerned"
 
-
+# Categorize age into 6 age ranges
 final_age_relevant_data <- age_relevant_data %>% mutate(cuts = cut(Age, c(17, 25, 40, 55, 65, 150))) %>% group_by(cuts, Concern) %>% 
   summarize(n=n())
 
 final_age_relevant_data <- group_by(final_age_relevant_data, cuts) %>% transmute(Concern, percent = round(n/sum(n),2 ))
 
+# Change column name and plot the data
 levels(final_age_relevant_data$cuts) <- c("18 to 25", "25 to 40", "40 to 55", "55 to 65", "65+") 
 
 final_age_relevant_data %>%
@@ -227,22 +240,28 @@ final_age_relevant_data %>%
 
 ### Household income
 
-We will also take a look at how household income affect people's opinion on global climate change. In this survey, income are separated into 6 different categories: *Under $40,000*, *$40,001 to $60,000*, *$60,001 to $80,000*, *$80,001 to $100,000*, *$100,001 to $150,000*, *More than $150,000*. Because this will be used as an input to the statistical model, we will simplify those ranges by taking its median, therefore, those range will become: *$30000*, *$50000*, *$70000*, *$90000*, *$125000*, *$200000*. (The Under 50000 and over 150000 are slightly adjusted). Table \@ref(tab:incomeconcern) is a summary table. From the table, residents that are most concerned about climate change are people with household income between 80K and 100K.
+We will also take a look at how household income affects people's opinions on global climate change. In this survey, income are separated into 6 different categories: *Under $40,000*, *$40,001 to $60,000*, *$60,001 to $80,000*, *$80,001 to $100,000*, *$100,001 to $150,000*, *More than $150,000*. Because this will be used as an input to the statistical model, we will simplify those ranges by representing them with numbers 1 to 6 respectively. (The Under 50000 and over 150000 are slightly adjusted). Table \@ref(tab:incomeconcern) is a summary table. From the table, residents that are most concerned about climate change are people with household incomes between 80K and 100K.
 
 ```{r incomeconcern, fig.cap='Concern about Climate Change Based on Household Income', echo=FALSE, warning=FALSE, message = FALSE, fig.width=5, fig.height=4, fig.pos = "!H"}
+
+# Select column and change their name
 income_relevant_data <- subset(climate_perception, select = c(`QD6`, `Q1r1`))
 names(income_relevant_data)[names(income_relevant_data) == 'QD6'] <- 'Household Income'
 names(income_relevant_data)[names(income_relevant_data) == 'Q1r1'] <- 'Concern'
 
+# Filter out invalid responses
 income_relevant_data <- income_relevant_data %>% filter(!str_detect(`Household Income`, "P"))
 income_relevant_data <- income_relevant_data %>% filter(!str_detect(`Concern`, "D"))
 
+# Group concern level into 2 big groups
 income_relevant_data$`Concern`[income_relevant_data$`Concern`=="Extremely concerned"] <- "Concerned"
 income_relevant_data$`Concern`[income_relevant_data$`Concern`=="Very concerned"] <- "Concerned"
 
+# Group concern level into 2 big groups
 income_relevant_data$`Concern`[income_relevant_data$`Concern`=="Not very concerned"] <- "Not Concerned"
 income_relevant_data$`Concern`[income_relevant_data$`Concern`=="Not at all concerned"] <- "Not Concerned"
 
+# Take the median of different income group 
 income_relevant_data$`Household Income`[income_relevant_data$`Household Income`=="Under $40,000"] <- 30000
 income_relevant_data$`Household Income`[income_relevant_data$`Household Income`=="$100,001 to $150,000"] <- 125000
 income_relevant_data$`Household Income`[income_relevant_data$`Household Income`=="More than $150,000"] <- 200000
@@ -253,10 +272,10 @@ income_relevant_data$`Household Income`[income_relevant_data$`Household Income`=
 final_income_relevant_data <- income_relevant_data %>% group_by(`Household Income`, `Concern`) %>% 
     summarize(n=n())
 
-
+# Group by and calculate the percentanges
 final_income_relevant_data <- group_by(final_income_relevant_data, `Household Income`) %>% transmute(Concern, percent = round(n/sum(n),2))
 
-
+# Plot the data
 final_income_relevant_data %>%
   knitr::kable(caption = "Concern about Climate Change Based on Household income",
                col.names = c("Household Income", "Cocern Level", "Percentage WRT Household Income"),
@@ -267,24 +286,29 @@ final_income_relevant_data %>%
 
 ### Gender
 
-We will now take a look at how people's gender affect their opinion on global climate change. The survey provides 5 options: *Woman*, *Man*, *Transgender*, *Prefer not to say*, *Not listed above*, since the vast majority respondents indicated their gender to be either *Man* or *Woman*, we will neglect the rest. For simplicity, we will use 1 to represent Male and 2 to represent Female. Table \@ref(tab:genderconcern) is a summary table. From the results, we can see that female are usually more concerned about climate change than males.
+We will now take a look at how people's gender affects their opinion on global climate change. The survey provides 5 options: *Woman*, *Man*, *Transgender*, *Prefer not to say*, *Not listed above*, since the vast majority of respondents indicated their gender to be either *Man* or *Woman*, we will neglect the rest. For simplicity, we will use 1 to represent males and 2 to represent females. Table \@ref(tab:genderconcern) is a summary table. From the results, we can see that females are usually more concerned about climate change than males.
 
 ```{r genderconcern, fig.cap='Concern about Climate Change Based on Gender', echo=FALSE, warning=FALSE, message = FALSE, fig.width=5, fig.height=4, fig.pos = "!H"}
 
+# Very similar to the previous code block
 gender_relevant_data <- subset(climate_perception, select = c(`QS2`, `Q1r1`))
 names(gender_relevant_data)[names(gender_relevant_data) == 'QS2'] <- 'Gender'
 names(gender_relevant_data)[names(gender_relevant_data) == 'Q1r1'] <- 'Concern'
 
+# Filter out invalid responses
 gender_relevant_data <- gender_relevant_data %>% filter(!str_detect(`Concern`, "D"))
 gender_relevant_data <- gender_relevant_data %>% filter(!str_detect(`Gender`, "P"))
 gender_relevant_data <- gender_relevant_data %>% filter(!str_detect(`Gender`, "T"))
 
+# Group concern level into 2 big groups
 gender_relevant_data$`Concern`[gender_relevant_data$`Concern`=="Extremely concerned"] <- "Concerned"
 gender_relevant_data$`Concern`[gender_relevant_data$`Concern`=="Very concerned"] <- "Concerned"
 
+# Group concern level into 2 big groups
 gender_relevant_data$`Concern`[gender_relevant_data$`Concern`=="Not very concerned"] <- "Not Concerned"
 gender_relevant_data$`Concern`[gender_relevant_data$`Concern`=="Not at all concerned"] <- "Not Concerned"
 
+# Use 1 to represent man and 2 to represent woman
 gender_relevant_data$`Gender`[gender_relevant_data$`Gender` == "Man"] <- 1
 gender_relevant_data$`Gender`[gender_relevant_data$`Gender` == "Woman"] <- 2
 
@@ -294,7 +318,7 @@ final_gender_relevant_data <- gender_relevant_data %>% group_by(`Gender`, `Conce
 
 final_gender_relevant_data <- group_by(final_gender_relevant_data, `Gender`) %>% transmute(Concern, percent = round(n/sum(n),2))
 
-
+# Plot the data
 final_gender_relevant_data %>%
   knitr::kable(caption = "Concern about Climate Change Based on Gender",
                col.names = c("Gender", "Cocern Level", "Percentage WRT Gender"),
@@ -306,9 +330,11 @@ final_gender_relevant_data %>%
 ### Level of Education
 
 Finally, we will look at the effect of education on people's awareness of climate change. There are 6 valid responses, for simplicity, we categorize them into 3 groups: *High School or Less*, *Undergraduate Degree*, *Post Graduate Degree/Professional School*, we will label them from 1-3 respectively. Table \@ref(tab:educoncern) is a summary table.
-From the table, clearly people with a higher level of education are usually more concerned with the climate change.
+From the table, people with a higher level of education are usually more concerned with climate change.
 
 ```{r educoncern, fig.cap='Concern about Climate Change Based on Level of Education', echo=FALSE, warning=FALSE, message = FALSE, fig.width=5, fig.height=4, fig.pos = "!H"}
+
+# Similar to previous code block
 edu_relevant_data <- subset(climate_perception, select = c(`QD5`, `Q1r1`))
 names(edu_relevant_data)[names(edu_relevant_data) == 'QD5'] <- 'Education'
 names(edu_relevant_data)[names(edu_relevant_data) == 'Q1r1'] <- 'Concern'
@@ -322,6 +348,7 @@ edu_relevant_data$`Concern`[edu_relevant_data$`Concern`=="Very concerned"] <- "C
 edu_relevant_data$`Concern`[edu_relevant_data$`Concern`=="Not very concerned"] <- "Not Concerned"
 edu_relevant_data$`Concern`[edu_relevant_data$`Concern`=="Not at all concerned"] <- "Not Concerned"
 
+# Represent education by number
 edu_relevant_data$`Education`[edu_relevant_data$`Education`=="High school or less"] <- 1
 edu_relevant_data$`Education`[edu_relevant_data$`Education`=="Some community college, vocational, trade school"] <- 2
 edu_relevant_data$`Education`[edu_relevant_data$`Education`=="Some university"] <- 2
@@ -335,7 +362,7 @@ final_edu_relevant_data <- edu_relevant_data %>% group_by(`Education`, `Concern`
 
 final_edu_relevant_data <- group_by(final_edu_relevant_data, `Education`) %>% transmute(Concern, percent = round(n/sum(n),2))
 
-
+# Plot the data
 final_edu_relevant_data %>%
   knitr::kable(caption = "Concern about Climate Change Based on Level of Education",
                col.names = c("Education", "Cocern Level", "Percentage WRT Education"),
@@ -348,7 +375,7 @@ final_edu_relevant_data %>%
 
 We will now fit the data, Figure \@ref(fig:figmodel) shows the table of model results, it is produced by model summary [@modelsum].
 
-```{r, echo = FALSE, message = FALSE, warning = FALSE}
+```{r, include = FALSE, echo = FALSE, message = FALSE, warning = FALSE}
 
 # We are using 1, 2, 3, 4 to represent categories instead of using $30000 for example.
 # This is because we want all indepdent variable to be the same scale.
@@ -381,11 +408,11 @@ all_relevant_data$`Age`[all_relevant_data$`Age` >= 65 & all_relevant_data$`Age` 
 
 
 all_relevant_data$`Income`[all_relevant_data$`Income`=="Under $40,000"] <- 1
-all_relevant_data$`Income`[all_relevant_data$`Income`=="$100,001 to $150,000"] <- 2
-all_relevant_data$`Income`[all_relevant_data$`Income`=="More than $150,000"] <- 3
-all_relevant_data$`Income`[all_relevant_data$`Income`=="$40,001 to $60,000"] <- 4
-all_relevant_data$`Income`[all_relevant_data$`Income`=="$80,001 to $100,000"] <- 5
-all_relevant_data$`Income`[all_relevant_data$`Income`=="$60,001 to $80,000"] <- 6
+all_relevant_data$`Income`[all_relevant_data$`Income`=="$40,001 to $60,000"] <- 2
+all_relevant_data$`Income`[all_relevant_data$`Income`=="$60,001 to $80,000"] <- 3
+all_relevant_data$`Income`[all_relevant_data$`Income`=="$80,001 to $100,000"] <- 4
+all_relevant_data$`Income`[all_relevant_data$`Income`=="$100,001 to $150,000"] <- 5
+all_relevant_data$`Income`[all_relevant_data$`Income`=="More than $150,000"] <- 6
 
 all_relevant_data$`Gender`[all_relevant_data$`Gender` == "Man"] <- 1
 all_relevant_data$`Gender`[all_relevant_data$`Gender` == "Woman"] <- 2
@@ -403,9 +430,11 @@ all_relevant_data$Gender <- as.numeric(as.character(all_relevant_data$Gender))
 all_relevant_data$Education <- as.numeric(as.character(all_relevant_data$Education))
 all_relevant_data$Concern <- as.numeric(as.character(all_relevant_data$Concern))
 
-
+# Run the logistic regression
 logis_reg <- glm(Concern ~ Age + Gender + Education + Income,
                          data = all_relevant_data, family = "binomial")
+
+summary(logis_reg)
 
 ```
 
@@ -414,20 +443,96 @@ logis_reg <- glm(Concern ~ Age + Gender + Education + Income,
 knitr::include_graphics("./model_result.png")
 ```
 
+By taking a look at the summary statistic table, the most significant factor is gender, it has a P-value of 0.0004, this means it is very likely that gender is an important factor in determining whether a person will be concerned about global warming. The coefficient for gender is 1.16, since we use 1 to represent *Concern* and 0 to represent *Not Concern*, this implies that woman is usually more concerned about global climate change. Similarly, Education has a P value of 0.007 which also makes it to be a significant factor. Since we use a bigger number to represent a higher level of education, this means that people with a higher level of education are usually more concerned about climate change than people with a lower level of education. Finally, Age and Income have a high P-value, which means there is no sufficient evidence to suggest that they are key factors in determining whether someone will be concerned about climate change.
+
+# Discussion
+
+## What is Done in This Paper
+After investigating on climate perception survey provided by the City of Toronto, we found out that gender and education are key factors in determining whether a person will be concerned about climate change. First of all, we found that women are usually more concerned about global climate change than men. Women in developed countries are more likely to recycle, purchase organic food and eco-labelled products, and support energy-efficiency policies. According to European research, women are more concerned about climate change and are more willing to make sacrifices to reduce carbon emissions than men. In the United States, women are 5% more likely than men to believe in climate science[@one-earth]. On top of that, women are also the most impacted group by climate change, it is estimated that 80% of people displaced by climate change are women. In less developed countries, women are usually responsible for gathering water and food, hence it is easier for them to feel the environmental degradation [@one-earth].
+
+Education is another key factor, our research shows that people with a higher level of education are more informed and concerned about climate change. The United Nations also stated that Education is the key to addressing climate change because education can help people change their attitudes and behaviours, as well as make more informed decisions. Young people can be taught about the effects of global warming and how to adapt to it in the classroom. Education can make people be more socially responsible and it can motivate the young people to take action against global warming [@united-nations].
+
+## Weakness and How to Improve
+
+The most notable weakness of this investigation is the sample size, the survey received a total of 404 responses, after filtering out invalid responses, we are left with 325 valid responses. Clearly, this sample size is too small, what we can do is sample more population by contacting more potential participants. This can also reduce bias in the result, currently, all of the participants indicated that their gender is either male or female, this means we are not receiving any feedback from sexual minority groups such as homosexual, bisexual and non-heterosexual individuals.
+
+Our statistical model also has potential problems because some independent variables are actually correlated. For example, education and income are two correlated variables because people with a higher level of education are more likely to have a higher income. This can be a significant problem because a change in one independent variable can results in the change of another independent variable, as a result, the model will fluctuate significantly. What we can do to solve this problem is to develop a more sophisticated statistical model.
+
+## What is Left to Learn and How Should We Proceed in the Future
+
+In our paper, we investigated each demographic factor separately without considering them as a whole. What we should explore next is to find out their interrelationship. For example, in this paper, we find out that age is not a key factor in determining one's awareness of climate change. However, it is possible that the combination of age and gender is a significant indicator. Table \@ref(tab:genderageconcern) is a summary table showing the number of people concerned about climate change, grouped by gender and age. Let us take a look at the age group 25-40 and 55-65. In the age group 25-40, 80% of people indicated that they are worried about climate change. Similarly, 80% of the population in the 55-65 age group indicated that they are worried about climate change, suggesting that age alone is not a determining factor. However, among all women with age between 25-40, 7% stated that they are not concerned about climate change, but among all women with age between 55-65, only 2% stated that they are not concerned about climate change, meaning that elder women are more concerned about climate change. This difference suggests that gender and age together might be a determining factor.
+
+```{r genderageconcern, fig.cap='Concern about Climate Change Based on Gender', echo=FALSE, warning=FALSE, message = FALSE, fig.width=5, fig.height=4, fig.pos = "!H"}
+
+# Group by gender and age
+gender_relevant_data <- subset(climate_perception, select = c(`QS2`, `Q1r1`, `HIDAGE1`))
+names(gender_relevant_data)[names(gender_relevant_data) == 'QS2'] <- 'Gender'
+names(gender_relevant_data)[names(gender_relevant_data) == 'Q1r1'] <- 'Concern'
+
+names(gender_relevant_data)[names(gender_relevant_data) == 'HIDAGE1'] <- 'Age'
+
+gender_relevant_data <- gender_relevant_data %>% filter(!str_detect(`Concern`, "D"))
+gender_relevant_data <- gender_relevant_data %>% filter(!str_detect(`Gender`, "P"))
+gender_relevant_data <- gender_relevant_data %>% filter(!str_detect(`Gender`, "T"))
+
+gender_relevant_data$`Concern`[gender_relevant_data$`Concern`=="Extremely concerned"] <- "Concerned"
+gender_relevant_data$`Concern`[gender_relevant_data$`Concern`=="Very concerned"] <- "Concerned"
+
+gender_relevant_data$`Concern`[gender_relevant_data$`Concern`=="Not very concerned"] <- "Not Concerned"
+gender_relevant_data$`Concern`[gender_relevant_data$`Concern`=="Not at all concerned"] <- "Not Concerned"
+
+gender_relevant_data$`Gender`[gender_relevant_data$`Gender` == "Man"] <- 1
+gender_relevant_data$`Gender`[gender_relevant_data$`Gender` == "Woman"] <- 2
+
+# Split age into different groups
+final_gender_relevant_data <- gender_relevant_data %>% mutate(cuts = cut(Age, c(17, 25, 40, 55, 65, 150)))
+
+final_gender_relevant_data <- final_gender_relevant_data %>% group_by(`Gender`, `cuts`, `Concern`) %>% 
+    summarize(n=n())
 
 
+# Plot the table
+final_gender_relevant_data %>%
+  knitr::kable(caption = "Concern about Climate Change Based on Gender and Age",
+               col.names = c("Gender", "Age Range", "Cocern Level", "Number"),
+               align = c('l', 'l', 'l'),
+               booktabs = T) %>%
+  kable_styling(full_width = T, latex_options = "hold_position")
+```
 
 
+\newpage
 
 
+# Appendix
 
+```{r, out.width='800px', echo=F, fig.pos = "!H"}
+knitr::include_graphics("../../inputs/data/s1.png")
+```
 
+```{r, out.width='800px', echo=F, fig.pos = "!H"}
+knitr::include_graphics("../../inputs/data/s2.png")
+```
 
+```{r, out.width='800px', echo=F, fig.pos = "!H"}
+knitr::include_graphics("../../inputs/data/s3.png")
+```
 
+```{r, out.width='800px', echo=F, fig.pos = "!H"}
+knitr::include_graphics("../../inputs/data/s4.png")
+```
 
+```{r, out.width='800px', echo=F, fig.pos = "!H"}
+knitr::include_graphics("../../inputs/data/s5.png")
+```
 
+```{r, out.width='800px', echo=F, fig.pos = "!H"}
+knitr::include_graphics("../../inputs/data/s6.png")
+```
 
+```{r, out.width='800px', echo=F, fig.pos = "!H"}
+knitr::include_graphics("../../inputs/data/s7.png")
+```
 
-
-
+\newpage
 # References
